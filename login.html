@@ -1,0 +1,357 @@
+<html>
+<head>
+<meta name="viewport" contents="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="stylesheet.css"/>
+<script src="validate.js"></script>
+</head>
+
+
+
+<body>
+<ul>
+  
+  <li><a href="#chooseferry.html"><i class="fa fa-ship w3-margin-right"></i>Ferry</a></li>
+  
+  <div class="topnav-right">
+
+  <li><a href="selectroute.html"><i class="fa fa-search w3-margin-right"></i>Explore</a></li> 
+  <li><a href="registration.html"><i class="fa fa-user-o w3-margin-right"></i>Register</a></li> 
+  <li><a href="login.html"><i class="fa fa-user-o w3-margin-right"></i>Login</a></li>
+  <li><a href="#contact.html"><i class="fa fa-phone w3-margin-right"></i>Contact us</a></li>
+  </div>
+</ul>
+</body>
+
+
+
+
+
+
+<html>
+<head>
+<meta name="viewport" contents="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="stylesheet.css"/>
+<script src="validate.js"></script>
+</head>
+<body>
+
+<h1 align="center"></h1>
+<div class="form" >
+<form name="ValidationForm" onsubmit="return validate();">
+
+
+
+
+
+<!DOCTYPE html>
+<html>
+<title>W3.CSS Template</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<style>
+
+
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+body {
+  font-size: 28px;
+}
+
+ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background-color: black;
+  position: -webkit-; /* Safari */
+  position: ;
+  top: 0;
+}
+
+li {
+  float: left;
+}
+
+li a {
+  display: block;
+  color: white;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+}
+
+li a:hover {
+  background-color: grey;
+}
+
+.active {
+  background-color: red;
+}
+
+.topnav-right {
+  float: right;
+}
+
+</style>
+</head>
+<body>
+
+
+
+<ul>
+  <li><a  href="login.html"><i class="fa fa-user-circle w3-margin-right"></i>Login</a></li>
+  
+
+  
+</ul>
+
+
+
+</body>
+</html>
+
+
+
+
+
+
+
+<div class="row">
+<div class="label">
+<label for="username"><i class="fa fa-user"></i>Username</label>
+</div>
+<div class="input1">
+<input type="text" name="username" placeholder="Tom Jerry "id = "username">
+</div>
+<div class="error" id="usernameErr">
+</div>
+</div>
+
+
+
+<div class="row">
+<div class="label">
+<label for="password"><i class="fa fa-user-circle"></i>Password</label>
+</div>
+<div class="input1">
+<input type="password" name="password" placeholder=" *****   " id = "password">
+<input type="checkbox"
+onclick="showpassword('password')">Show Password
+</div>
+<div class="error" id="passwordErr">
+</div>
+</div>
+
+
+
+<div class="row">
+<div class="label">
+<label for="cnfpassword"><i class="fa fa-user-circle"></i> Confirm Password</label>
+</div>
+<div class="input1">
+<input type="password" name="cnfpassword"
+placeholder="Confirm password"id = "cnfpassword">
+<input type="checkbox"
+onclick="showpassword('cnfpassword')">Show Password
+</div>
+<div class="error" id="cnfpasswordErr">
+</div>
+</div>
+
+
+
+
+
+ <div class="row">
+<input type="submit" value="Register" id="btn">
+</div>
+</form>
+</div>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+<style>
+body {
+ background-image:url("photo.jpeg");
+}
+.form
+{
+border-radius: 5px;
+background-color: #f2f2f2;
+padding: 20px;
+width:30%;
+margin-left:880px;
+padding-bottom:50px;
+}
+.label
+{
+float: left;
+width: 100px;
+margin-top: 6px;
+}
+.input1
+{
+float: left;
+width: 250px;
+margin-top: 6px;
+margin-left: 0px 
+}
+label
+{
+ padding: 12px 12px 12px 0;
+ display: inline-block;
+}
+input[type=text], input[type=password],input[type=email],input[type=date],select, textarea
+{
+ width: 100%;
+ padding: 12px;
+ border: 1px solid #ccc;
+ border-radius: 4px;
+ box-sizing: border-box;
+ resize: vertical;
+}
+.row
+{
+content: "";
+ display: table;
+ clear: both;
+}
+@media screen and (max-width: 1000px)
+{
+ .label, .input1, input[type=submit]
+ {
+ width: 100%;
+ margin-top: 0;
+ }
+}
+.error
+{
+color:red;
+float: left;
+width: 75%;
+margin-top: 6px;
+}
+input[type=submit] {
+ background-color: #6666ff;
+ color: black;
+ padding: 12px 20px;
+ border: none;
+ border-radius: 4px;
+ cursor: pointer;
+ float: right;
+ position: absolute;
+ align:center;
+ margin-left : 120px;
+ margin-top:20px;
+ box-shadow: 1px 1px 1px;
+}
+</style>
+
+
+
+
+
+<script>
+function printError(elemId, hintMsg) {
+ document.getElementById(elemId).innerHTML = hintMsg;
+}
+function showpassword(elemId)
+{
+ var x = document.getElementById(elemId);
+ if (x.type == "password")
+ {
+ x.type = "text";
+ }
+ else
+ {
+ x.type = "password";
+ }
+}
+function validate()
+{
+
+var username = document.forms["ValidationForm"]["username"].value;
+var password = document.forms["ValidationForm"]["password"].value;
+var cnfpassword = document.forms["ValidationForm"]["cnfpassword"].value;
+
+
+
+var  usernameErr = passwordErr = cnfpasswordErr  =true;
+
+if(username == "")
+{
+printError("usernameErr", "Please enter your username");
+}
+else
+{
+var regex = /^[A-Za-z0-9_]{3,20}$/;
+if(regex.test(username) == false)
+{
+printError("usernameErr", "Username can only contain alphanumeric characters and underscore.");
+}
+else
+{
+printError("usernameErr", "");
+ usernameErr = false;
+}
+}
+if(password == "")
+{
+printError("passwordErr", "Please enter your password");
+}
+else
+{
+var regex = /^[A-Za-z0-9!@#$%^&*()_]{6,20}$/;
+if(regex.test(password) == false)
+{
+printError("passwordErr", " Enter a valid password");
+}
+else
+{
+printError("passwordErr", "");
+ passwordErr = false;
+}
+}
+if(cnfpassword == "")
+{
+printError("cnfpasswordErr", "Please enter your password again here.");
+}
+else
+{
+if(cnfpassword != password)
+{
+printError("cnfpasswordErr", "Passwords do not match !!!");
+}
+else
+{
+printError("cnfpasswordErr", "");
+ cnfpasswordErr = false;
+}
+}
+
+
+
+if(( usernameErr || passwordErr || cnfpasswordErr ) == true)
+{
+return false;
+}
+else
+{
+return true;
+}
+}
+</script>
