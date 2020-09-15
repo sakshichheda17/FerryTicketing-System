@@ -3,7 +3,10 @@ from django.contrib.auth import authenticate
 from .forms import PassengerCreationForm, PassengerLoginForm
 from django.contrib import messages
 from .models import Passenger
-
+from tickets.forms import TicketForm
+from route.models import Route
+from tickets.models import Ticket
+from django.http import HttpResponseRedirect
 
 def login(request):
 	if request.method == "POST":
@@ -54,7 +57,43 @@ def register(request):
 	return render(request,'register.html',{'form': form })
 
 
+def generate_ticket(obj,passenger_id,form):
+	print(form.cleaned_data['journey_type'])
+	ticket = Ticket.objects.create(
+			passenger_id = passenger_id,
+			source = obj.source,
+			destination = obj.destination,
+			no_of_adults = form.cleaned_data['no_of_adults'],
+			no_of_children = form.cleaned_data['no_of_children'],
+			journey_type = form.cleaned_data['journey_type']
+		)
+	ticket.save()
+	return ticket
+
 def select_route(request):	
-	id = request.session['passenger_id']
-	return render(request,'select_route.html',{'id': id})
+	passenger_id = request.session['passenger_id']
+
+	form = TicketForm(request.POST or None)
+	routes = Route.objects.all()
+	
+	context = {}
+	context.update({'routes': routes, 'passenger_id': passenger_id})
+	
+	if form.is_valid():
+		id = request.POST['route']
+		journey_type= request.POST['journey_type']
+		obj = Route.objects.get(id=id)
+		out_ticket = generate_ticket(obj,passenger_id,form)
+		if journey_type == 'R':
+			in_ticket = generate_ticket(obj,passenger_id,form)
+		form = TicketForm()
+		context['ticket'] = out_ticket
+		if Ticket.objects.latest('id').journey_type == 'R':
+			return HttpResponseRedirect('/return',request)
+		else:
+			return HttpResponseRedirect('/single',request)
+
+	context.update({'form': form})
+	print(context)
+	return render(request,'select_route.html',context)
 	

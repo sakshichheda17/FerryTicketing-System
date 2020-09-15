@@ -16,6 +16,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path,include
 from passenger.views import register,login,select_route
+from leg.views import get_return_view,get_single_view
 from django.contrib.auth import views as auth_views
 
 urlpatterns = [
@@ -23,4 +24,7 @@ urlpatterns = [
     path('login/', login ,name='login'),
     path('select_route/', select_route ,name='select_route'),
     path('register/', register,name='register'), 
+
+    path('return/', get_return_view),
+    path('single/', get_single_view),
 ]
