@@ -4,15 +4,17 @@ from run.models import Run
 from leg.models import Leg
 from django.http import HttpResponseRedirect
 from tickets.models import Ticket
+from django.db.models.functions import Now
 
 def update_ticket(ticket,leg_id):
     leg = Leg.objects.get(id=leg_id)
     ticket.leg_id = leg_id
-    ticket.booking_time = datetime.datetime.now()
+    ticket.booking_time = str(datetime.datetime.now())
     ticket.vessel_name = leg.vessel_name
-    ticket.arrival_time = leg.arrival_time,
-    ticket.departure_time = leg.departure_time,
+    ticket.arrival_time = leg.arrival_time
+    ticket.departure_time = leg.departure_time
     ticket.save()
+    return ticket
     
 def get_leg(date):
     date_int = (list(map(int,date.split('-')))) #convert to list of integers [year,month,date]
@@ -79,9 +81,12 @@ def get_return_view(request):
         request.session['out_ferry_id'] = request.POST['out_ferry_id']
         request.session['in_ferry_id'] = request.POST['in_ferry_id']
         in_ticket = list(Ticket.objects.filter(passenger_id=passenger_id))[-1]
-        update_ticket(in_ticket,request.POST['in_ferry_id'])
         out_ticket = list(Ticket.objects.filter(passenger_id=passenger_id))[-2]
-        update_ticket(out_ticket,request.POST['out_ferry_id'])
+        out_ticket = update_ticket(out_ticket,request.POST['out_ferry_id'])
+        request.session['booking_time'] = out_ticket.booking_time
+        in_ticket = update_ticket(in_ticket,request.POST['in_ferry_id'])
+        print(in_ticket.booking_time)
+        request.session['in_booking_time'] = in_ticket.booking_time
         return HttpResponseRedirect('/checkout',request)
 
     return render(request, "return.html", context)
@@ -109,8 +114,11 @@ def get_single_view(request):
         
         # update ticket
         out_ticket = list(Ticket.objects.filter(passenger_id=passenger_id))[-1]
-        update_ticket(out_ticket,request.POST['out_ferry_id'])
-        
+        print(out_ticket)
+        out_ticket = update_ticket(out_ticket,request.POST['out_ferry_id'])
+        print('hello')
+        request.session['out_booking_time'] = out_ticket.booking_time
+        request.session['in_booking_time'] = None
         return HttpResponseRedirect('/checkout',request)
 
     return render(request, "single.html", context)

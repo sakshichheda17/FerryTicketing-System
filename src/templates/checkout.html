@@ -1,2 +1,46 @@
-<h1>checkout</h1>
-<h3>Passenger {{ passenger_id }}'s Ticket Details</h3>
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h1>Checkout Page</h1>
+<h3>Ticket Details</h3>
+<div>
+
+<table class="table .table-bordered .table-striped">
+<th>Departure ticket</th>
+<td>{{ out_ticket.source }} </td>
+<td>{{ out_ticket.destination }}</td>
+<td>{{ out_ticket.vessel_name}}</td>
+<td>{{ out_ticket.departure_time}}</td>
+<td>{{ out_ticket.arrival_time}}</td>
+<td>{{ out_ticket.no_of_adults}}</td>
+<td>{{ out_ticket.no_of_children}}</td>
+<td>{{ out_ticket.journey_type}}</td>
+<td>{{ out_ticket.booking_time}}</td>
+<td>{{ out_ticket.journey_amount}}</td>
+<td>{{ out_ticket.total_amount}}</td>
+</table>
+</div>
+<div>
+{% if in_booking_time %}
+<table class="table .table-bordered .table-striped">
+<th>Arrival ticket</th>
+<td>{{ in_ticket.source }} </td>
+<td>{{ in_ticket.destination }}</td>
+<td>{{ in_ticket.vessel_name}}</td>
+<td>{{ in_ticket.departure_time}}</td>
+<td>{{ in_ticket.arrival_time}}</td>
+<td>{{ in_ticket.no_of_adults}}</td>
+<td>{{ in_ticket.no_of_children}}</td>
+<td>{{ in_ticket.journey_type}}</td>
+<td>{{ in_ticket.booking_time}}</td>
+<td>{{ in_ticket.journey_amount}}</td>
+<td>{{ in_ticket.total_amount}}</td>
+</table>
+{% endif %}
+</div>
+<form action="" method="post">
+    <input class="btn btn-primary" type="submit" value="Pay Now">
+</form>
+
+{% endblock %}
