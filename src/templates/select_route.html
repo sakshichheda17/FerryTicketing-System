@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+{% block content %}
+<h1>Select Route</h1>
+{{id}}
+{% endblock %}
+
+{% block nav %}
+
+	<a class="nav-item nav-link" href="{% url 'login' %}">Logout</a>
+	
+{% endblock %}
+
+{% block redirect %}
+	<a href="{% url 'select_route' %}" class="del-msg">&times;</a>
+{% endblock %}
