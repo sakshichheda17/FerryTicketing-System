@@ -1,10 +1,188 @@
-{% extends 'base.html' %}
+<!DOCTYPE html>
+<html>
+<head>
+	<!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-{% block content %}
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
+	<title>Checkout</title>
+	<style type="text/css">
+
+
+		.expiry-date-group {
+		  float: left;
+		  width: 50%
+		}
+
+		.expiry-date-group input {
+		  width: calc(100% + 1px);
+		  border-top-right-radius: 0;
+		  border-bottom-right-radius: 0;
+		}
+
+		.expiry-date-group input:focus {
+		  position: relative;
+		  z-index: 10;
+		}
+
+		.security-code-group {
+		  float: right;
+		  width: 50%
+		}
+
+		.security-code-group input {
+		  border-top-left-radius: 0;
+		  border-bottom-left-radius: 0;
+		}
+
+		#PayButton {
+		  outline: 0!important;
+		  height: 42px;
+		  font-size: 16px;
+		  background-color: #54C7C3!important;
+		  border: none;
+		}
+
+		#PayButton:hover {
+		  background-color: #6DCECB!important;
+		}
+
+		#PayButton:active {
+		  background-color: #4FBCB9!important;
+		}
+
+		#PayButton:disabled {
+		  background: rgba(84, 199, 195, .5)!important;
+		  color: #FFF!important;
+		}
+
+		.container {
+		  margin-top: 50px;
+		}
+
+		#Checkout {
+		  z-index: 100001;
+		  width: 50%;
+		  min-width: 300px;
+		  height: 100%;
+		  min-height: 100%;
+		  background: 0 0 #ffffff;
+		  border-radius: 8px;
+		  border: 1px solid #dedede;
+		  margin-left: auto;
+		  margin-right: auto;
+		  display: block;
+		}
+
+		#Checkout>h1 {
+		  margin: 0;
+		  padding: 20px;
+		  text-align: center;
+		  background: #EEF2F4;
+		  color: #5D6F78;
+		  font-size: 24px;
+		  font-weight: 300;
+		  border-bottom: 1px solid #DEDEDE;
+		  border-top-left-radius: 8px;
+		  border-top-right-radius: 8px;
+		}
+
+		#Checkout>form {
+		  margin: 0 25px 25px;
+		}
+
+		label {
+		  color: #46545C;
+		  margin-bottom: 2px;
+		}
+
+		.input-container {
+		  position: relative;
+		}
+
+		.input-container input {
+		  padding-right: 25px;
+		}
+
+		.input-container>i, a[role="button"] {
+		  color: #d3d3d3;
+		  width: 25px;
+		  height: 30px;
+		  line-height: 30px;
+		  font-size: 16px;
+		  position: absolute;
+		  top: 2px;
+		  right: 2px;
+		  cursor: pointer;
+		  text-align: center;
+		}
+
+		.input-container>i:hover, a[role="button"]:hover {
+		  color: #777;
+		}
+		.amount-placeholder {
+		  font-size: 20px;
+		  height: 34px;
+		}
+
+		.amount-placeholder>button {
+		  float: right;
+		  width: 60px;
+		}
+
+		.amount-placeholder>span {
+		  line-height: 34px;
+		}
+
+		.card-row {
+		  text-align: center;
+		  margin: 20px 25px 10px;
+		}
+
+		.card-row span {
+		  width: 48px;
+		  height: 30px;
+		  margin-right: 3px;
+		  background-repeat: no-repeat;
+		  display: inline-block;
+		  background-size: contain;
+		}
+
+		.submit-button-lock {
+		  height: 20px;
+		  margin-top: -2px;
+		  margin-right: 7px;
+		  vertical-align: middle;
+		  
+		  display: inline-block;
+		}
+
+		.align-middle {
+		  vertical-align: middle;
+		}
+
+		input {
+		  box-shadow: none!important;
+		}
+
+		input:focus {
+		  border-color: #b0e5e3!important;
+		  background-color: #EEF9F9!important;
+		}
+	</style>
+</head>
+<body>
+<link href='https://fonts.googleapis.com/css?family=Open+Sans:400,300' rel='stylesheet' type='text/css'>
+<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+
+<div>
 <h1>Checkout Page</h1>
 <h3>Ticket Details</h3>
-<div>
+</div>
+<div class='container'>
 
 <table class="table .table-bordered .table-striped">
 <th>Departure ticket</th>
@@ -21,7 +199,7 @@
 <td>{{ out_ticket.total_amount}}</td>
 </table>
 </div>
-<div>
+<div class='container'>
 {% if in_booking_time %}
 <table class="table .table-bordered .table-striped">
 <th>Arrival ticket</th>
@@ -39,8 +217,64 @@
 </table>
 {% endif %}
 </div>
-<form action="" method="post">
-    <input class="btn btn-primary" type="submit" value="Pay Now">
-</form>
 
-{% endblock %}
+<div class="container">
+  <div id="Checkout" class="inline">
+      <h1>Pay Invoice</h1>
+      <div class="card-row">
+          <span class="visa"></span>
+          <span class="mastercard"></span>
+          <span class="amex"></span>
+          <span class="discover"></span>
+      </div>
+      <form>
+          <div class="form-group">
+              <label for="PaymentAmount">Payment amount</label>
+              <div class="amount-placeholder">
+                  <span>$</span>
+                  <span>500.00</span>
+              </div>
+          </div>
+          <div class="form-group">
+              <label or="NameOnCard">Name on card</label>
+              <input id="NameOnCard" class="form-control" type="text" maxlength="255"></input>
+          </div>
+          <div class="form-group">
+              <label for="CreditCardNumber">Card number</label>
+              <input id="CreditCardNumber" class="null card-image form-control" type="text"></input>
+          </div>
+          <div class="expiry-date-group form-group">
+              <label for="ExpiryDate">Expiry date</label>
+              <input id="ExpiryDate" class="form-control" type="text" placeholder="MM / YY" maxlength="7"></input>
+          </div>
+          <div class="security-code-group form-group">
+              <label for="SecurityCode">Security code</label>
+              <div class="input-container" >
+                  <input id="SecurityCode" class="form-control" type="text" ></input>
+                  <i id="cvc" class="fa fa-question-circle"></i>
+              </div>
+          </div>
+       
+          <button id="PayButton" class="btn btn-block btn-success submit-button" type="submit">
+              <span class="submit-button-lock"></span>
+              <span class="align-middle">Pay $500.00</span>
+          </button>
+      </form>
+  </div>
+</div>
+
+<script type="text/javascript">
+	$(function () {
+	  $('[data-toggle="popover"]').popover();
+	  
+	  $('#cvc').on('click', function(){
+	    if ( $('.cvc-preview-container').hasClass('hide') ) {
+	      $('.cvc-preview-container').removeClass('hide');
+	    } else {
+	      $('.cvc-preview-container').addClass('hide');
+	    }    
+	  });
+	  
+	});
+</script>
+</body>
