@@ -18,8 +18,9 @@ def login(request):
 				if Passenger.objects.filter(username=username,password=password).exists():            		
 					messages.success(request, f'The passenger {username} was logged in successfully.')
 					passenger_id = Passenger.objects.get(username=username).id
-					request.session['username']=username
-					return render(request,'select_route.html')
+					request.session['passenger_id']=passenger_id
+					return redirect('select_route')
+					# return render(request,'select_route.html', {})
 
 				else:
 					messages.warning(request,'Please enter a valid username and password.')
@@ -54,5 +55,6 @@ def register(request):
 
 
 def select_route(request):	
-	print(request.session['username'])    
-	return render(request,'select_route.html')
+	id = request.session['passenger_id']
+	return render(request,'select_route.html',{'id': id})
+	

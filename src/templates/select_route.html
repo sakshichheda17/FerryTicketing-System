@@ -10,7 +10,8 @@
 	<a class="nav-item nav-link" href="{% url 'login' %}">Logout</a>
 	
 {% endblock %}
-
+<h1>{{id}}</h1>
 {% block redirect %}
+
 	<a href="{% url 'select_route' %}" class="del-msg">&times;</a>
 {% endblock %}
