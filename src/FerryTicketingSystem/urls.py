@@ -15,8 +15,9 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path,include
-from passenger.views import register,login,select_route
+from passenger.views import register,login,select_route,checkout_view
 from leg.views import get_return_view,get_single_view
+# from tickets.views import checkout_view
 from django.contrib.auth import views as auth_views
 
 urlpatterns = [
@@ -27,4 +28,6 @@ urlpatterns = [
 
     path('return/', get_return_view),
     path('single/', get_single_view),
+
+    path('checkout/', checkout_view),
 ]

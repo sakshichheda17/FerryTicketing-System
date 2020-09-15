@@ -1,1 +1,36 @@
-<h1>Single Journey</h1>
+{% extends 'base.html'%}
+
+{% block content %}
+   
+   <form action="" method="POST">
+       {% csrf_token %}
+       <input type="date" name="date" id="today">
+       <input type="submit" name="Submit" value="Find Ferry" class="btn btn-primary">
+       
+    </form>
+       <br>
+       {% if out_available%}
+       
+       <form action="" method="post">
+        {% csrf_token %}
+       {% for ferry in out_available %}
+       <input type="radio" id="{{ forloop.counter }}" name="out_ferry_id" value="{{ ferry.id }}">
+       <label for="other">
+        Ferry_id {{ ferry.id }}<br>
+        source {{ ferry.source }}<br>
+        destination {{ ferry.destination }}<br>
+        vessel {{ ferry.vessel_name }}<br>
+        Date {{ ferry.date }}<br>
+        Run id {{ ferry.run_id }}<br>
+       </label><br>
+       
+       {% endfor %}
+       <input type="submit" name="Submit" value="Ok" class="btn btn-primary">
+    </form>
+     {% endif %}
+   
+   <!-- </form> -->
+  
+   
+ 
+{% endblock %}

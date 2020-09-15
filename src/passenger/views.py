@@ -82,6 +82,7 @@ def select_route(request):
 	if form.is_valid():
 		id = request.POST['route']
 		journey_type= request.POST['journey_type']
+		request.session['passenger_id']=passenger_id
 		obj = Route.objects.get(id=id)
 		out_ticket = generate_ticket(obj,passenger_id,form)
 		if journey_type == 'R':
@@ -97,3 +98,8 @@ def select_route(request):
 	print(context)
 	return render(request,'select_route.html',context)
 	
+def checkout_view(request):
+	passenger_id = request.session['passenger_id']
+	
+	context = {'passenger_id': request.session['passenger_id']}
+	return render(request,'checkout.html',context)
