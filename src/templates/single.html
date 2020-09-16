@@ -1,7 +1,14 @@
 {% extends 'base.html'%}
 
+{% block nav %}
+
+	<a class="nav-item nav-link" href="{% url 'login' %}">Logout</a>
+	
+{% endblock %}
 {% block content %}
-   
+<fieldset class="form-group">
+   <legend class="border-bottom mb-4">Select Date For One Way</legend>
+</fieldset>
    <form action="" method="POST">
        {% csrf_token %}
        <input type="date" name="date" id="today">
@@ -16,12 +23,16 @@
        {% for ferry in out_available %}
        <input type="radio" id="{{ forloop.counter }}" name="out_ferry_id" value="{{ ferry.id }}">
        <label for="other">
-        Ferry_id {{ ferry.id }}<br>
-        source {{ ferry.source }}<br>
-        destination {{ ferry.destination }}<br>
-        vessel {{ ferry.vessel_name }}<br>
-        Date {{ ferry.date }}<br>
-        Run id {{ ferry.run_id }}<br>
+         <table>
+            <tr>
+            <th>Ferry ID: </th><td>{{ ferry.id }}</td></tr>
+            <!-- <tr><th>Source: </th><td>{{ ferry.source }}</td></tr>
+            <tr><th>Destination: </th><td>{{ ferry.destination }}</td></tr> -->
+            <tr><th>Vessel: </th><td>{{ ferry.vessel_name }}</td></tr>
+            <tr><th>Date: </th><td>{{ ferry.date }}</td></tr>
+            <tr><th>Arrival Time: </th><td>{{ ferry.arrival_time }}</td></tr>
+            <tr><th>Departure Time:  </th><td>{{ ferry.departure_time }}</td></tr>
+            </table>
        </label><br>
        
        {% endfor %}
