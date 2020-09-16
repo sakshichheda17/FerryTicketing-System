@@ -16,7 +16,7 @@ def update_ticket(ticket,leg_id):
     ticket.save()
     return ticket
     
-def get_leg(date):
+def get_leg(date,source,destination):
     date_int = (list(map(int,date.split('-')))) #convert to list of integers [year,month,date]
     d = datetime.date(date_int[0],date_int[1],date_int[2]) #pass integers to create datetime instance
     day = d.strftime("%a") #get day of that date
@@ -35,24 +35,25 @@ def get_leg(date):
                 available.append(leg)
         #return legs
     else:
-        #get legs from run table based on day
+        #get legs from run table based on day and passenger's route choice!
         for i in range(len(schedule)):
             run = schedule[i]
             if getattr(run, day): #if there is run on the requested date's day, add new leg
-                Leg.objects.create(
-                    date=d,
-                    run_id=run.id,
-                    source = run.source,
-                    destination = run.destination,
-                    vessel_name = run.vessel_name,
-                    arrival_time = run.arrival_time,
-                    departure_time = run.departure_time,
-                    PASS = run.PASS,
-                    PARS = run.PARS,
-                    PCSS = run.PCSS,
-                    PCRS = run.PCRS,
-                    max_seats = run.max_seats)
-                available.append(Leg.objects.latest('id'))
+                if run.source == source and run.destination == destination:
+                    Leg.objects.create(
+                        date=d,
+                        run_id=run.id,
+                        source = run.source,
+                        destination = run.destination,
+                        vessel_name = run.vessel_name,
+                        arrival_time = run.arrival_time,
+                        departure_time = run.departure_time,
+                        PASS = run.PASS,
+                        PARS = run.PARS,
+                        PCSS = run.PCSS,
+                        PCRS = run.PCRS,
+                        max_seats = run.max_seats)
+                    available.append(Leg.objects.latest('id'))
     return available
 
 
@@ -64,11 +65,17 @@ def get_return_view(request):
         formtype = request.POST['Submit']
         print(request.POST)
         context.update({'formtype': formtype})
+        in_ticket = list(Ticket.objects.filter(passenger_id=passenger_id))[-1]
+        out_ticket = list(Ticket.objects.filter(passenger_id=passenger_id))[-2]
+        in_source = in_ticket.source
+        in_destination = in_ticket.destination
+        out_source = out_ticket.source
+        out_destination = out_ticket.destination
         # date = request.POST['date'] #get date as string
         out_date = request.POST['date1']
         in_date = request.POST['date2']
-        out_available = get_leg(out_date)
-        in_available = get_leg(in_date)
+        out_available = get_leg(out_date,out_source,out_destination)
+        in_available = get_leg(in_date,in_source,in_destination)
                 
         context.update({
             # 'day' : day,
@@ -100,8 +107,11 @@ def get_single_view(request):
         # print(request.POST)
         context.update({'formtype': formtype})
         # date = request.POST['date'] #get date as string
+        out_ticket = list(Ticket.objects.filter(passenger_id=passenger_id))[-1]
+        out_source = out_ticket.source
+        out_destination = out_ticket.destination
         out_date = request.POST['date']
-        out_available = get_leg(out_date)       
+        out_available = get_leg(out_date,out_source,out_destination)       
                 
         context.update({
             'out_available': out_available

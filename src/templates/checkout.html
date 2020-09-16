@@ -206,7 +206,7 @@
 <th>Arrival</th>
 <th>Adults</th>
 <th>Children</th>
-<th>Single/Return</th>
+<th>Journey Date</th>
 <th>Booking Time</th>
 <th>Journey Amount</th>
 <th>Total Amount</th>
@@ -219,7 +219,7 @@
 	<td>{{ out_ticket.arrival_time}}</td>
 	<td>{{ out_ticket.no_of_adults}}</td>
 	<td>{{ out_ticket.no_of_children}}</td>
-	<td>{{ out_ticket.journey_type}}</td>
+	<td>{{ out_leg.date }}</td>
 	<td>{{ out_ticket.booking_time}}</td>
 	<td>{{ out_ticket.journey_amount}}</td>
 	<td>{{ out_ticket.total_amount}}</td>
@@ -238,24 +238,25 @@
 	<th>Arrival</th>
 	<th>Adults</th>
 	<th>Children</th>
-	<th>Single/Return</th>
+	<th>Journey Date</th>
 	<th>Booking Time</th>
 	<th>Journey Amount</th>
 	<th>Total Amount</th>
 	</tr>
 	<tr>
-		<td>{{ out_ticket.source }} </td>
-		<td>{{ out_ticket.destination }}</td>
-		<td>{{ out_ticket.vessel_name}}</td>
-		<td>{{ out_ticket.departure_time}}</td>
-		<td>{{ out_ticket.arrival_time}}</td>
-		<td>{{ out_ticket.no_of_adults}}</td>
-		<td>{{ out_ticket.no_of_children}}</td>
-		<td>{{ out_ticket.journey_type}}</td>
-		<td>{{ out_ticket.booking_time}}</td>
-		<td>{{ out_ticket.journey_amount}}</td>
-		<td>{{ out_ticket.total_amount}}</td>
-		</tr>
+		<td>{{ in_ticket.source }} </td>
+		<td>{{ in_ticket.destination }}</td>
+		<td>{{ in_ticket.vessel_name}}</td>
+		<td>{{ in_ticket.departure_time}}</td>
+		<td>{{ in_ticket.arrival_time}}</td>
+		<td>{{ in_ticket.no_of_adults}}</td>
+		<td>{{ in_ticket.no_of_children}}</td>
+		<td>{{ in_leg.date }}</td>
+		<td>{{ in_ticket.booking_time}}</td>
+		<td>{{ in_ticket.journey_amount}}</td>
+		<td>{{ in_ticket.total_amount}}</td>
+	</tr>
+
 </table>
 {% endif %}
 </div>

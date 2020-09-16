@@ -58,16 +58,24 @@ def register(request):
 	return render(request,'register.html',{'form': form })
 
 
-def generate_ticket(obj,passenger_id,form):
-	print(form.cleaned_data['journey_type'])
+def generate_ticket(obj,passenger_id,form,ticket_no):
+	#ticket_no =1 for single way ticket
+	#ticket_no=2 for return way ticket
+	# print(form.cleaned_data['journey_type'])
 	ticket = Ticket.objects.create(
 			passenger_id = passenger_id,
-			source = obj.source,
-			destination = obj.destination,
 			no_of_adults = form.cleaned_data['no_of_adults'],
 			no_of_children = form.cleaned_data['no_of_children'],
 			journey_type = form.cleaned_data['journey_type']
 		)
+	#For Single Way Ticket, source and destination will be same as passenger's route choice
+	if ticket_no==1: 
+		ticket.source = obj.source
+		ticket.destination = obj.destination
+	#For Return Way Ticket, source and destination will be opposite of passenger's route choice
+	elif ticket_no==2:
+		ticket.source = obj.destination
+		ticket.destination = obj.source
 	ticket.save()
 	return ticket
 
@@ -85,11 +93,11 @@ def select_route(request):
 		journey_type= request.POST['journey_type']
 		request.session['passenger_id']=passenger_id
 		obj = Route.objects.get(id=id)
-		out_ticket = generate_ticket(obj,passenger_id,form)
+		out_ticket = generate_ticket(obj,passenger_id,form,1)
 		if journey_type == 'R':
-			in_ticket = generate_ticket(obj,passenger_id,form)
+			in_ticket = generate_ticket(obj,passenger_id,form,2)
 		form = TicketForm()
-		context['ticket'] = out_ticket
+		context['ticket'] = out_ticket #why did i do this?
 		if Ticket.objects.latest('id').journey_type == 'R':
 			return HttpResponseRedirect('/return',request)
 		else:
@@ -128,19 +136,26 @@ def checkout_view(request):
 	context = {'passenger_id': request.session['passenger_id'],
 		'out_booking_time': out_booking_time
 	}
-
-	out_ticket = list(Ticket.objects.filter(passenger_id=passenger_id))[-1]
-	calc_journey_amount(out_ticket)
-	context.update({'out_ticket': out_ticket})
 	
-	if out_ticket.journey_type == 'R':
+	last_ticket = list(Ticket.objects.filter(passenger_id=passenger_id))[-1]
+	if last_ticket.journey_type == 'R':
+		out_ticket = list(Ticket.objects.filter(passenger_id=passenger_id))[-2]
+		calc_journey_amount(out_ticket)
+		out_leg= Leg.objects.get(id=out_ticket.leg_id)
+		context.update({'out_ticket': out_ticket,'out_leg':out_leg})
 		in_booking_time = request.session['in_booking_time']
-		in_ticket = list(Ticket.objects.filter(passenger_id=passenger_id))[-2]
-		context.update({'in_ticket': in_ticket})
+		in_ticket = list(Ticket.objects.filter(passenger_id=passenger_id))[-1]
+		in_leg= Leg.objects.get(id=in_ticket.leg_id)
+		context.update({'in_ticket': in_ticket, 'in_leg': in_leg})
 		context.update({'in_booking_time': in_booking_time})
 		calc_journey_amount(in_ticket)
 		calc_total_amount(out_ticket,in_ticket)
+		
 	else:
+		out_ticket = list(Ticket.objects.filter(passenger_id=passenger_id))[-1]
+		calc_journey_amount(out_ticket)
+		out_leg= Leg.objects.get(id=out_ticket.leg_id)
+		context.update({'out_ticket': out_ticket,'out_leg':out_leg})
 		out_ticket.total_amount = out_ticket.journey_amount
 		out_ticket.save()
 	
