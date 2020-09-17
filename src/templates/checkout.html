@@ -272,8 +272,36 @@
           <span class="amex"></span>
           <span class="discover"></span>
       </div>
-      <form id='PaymentForm' action="http://127.0.0.1:8000/select_route" method='POST'>
-          <div class="form-group">
+      <form id='PaymentForm' action="" method='POST'>{% csrf_token %}
+      	<fieldset class="form-group">
+			<legend class="mb-4">Adult Passengers</legend>
+
+
+      	{% with ''|center:out_ticket.no_of_adults as range %}
+      	{% for _ in range %}
+      	<div class="form-group">
+      		<label>Passenger{{ forloop.counter }} Name</label>
+      		<input type="text" name="passenger">
+      	</div>
+      	{% endfor %}
+      	{% endwith %}
+		</fieldset>
+
+      	<fieldset class="form-group">
+			<legend class="mb-4">Child Passengers</legend>
+		
+
+      	{% with ''|center:out_ticket.no_of_children as range %}
+      	{% for _ in range %}
+      	<div class="form-group">
+      		<label>Passenger{{ forloop.counter }} Name</label>
+      		<input type="text" name="passenger">
+      	</div>
+      	{% endfor %}
+      	{% endwith %}
+      	</fieldset>
+
+          <!-- <div class="form-group">
               <label for="PaymentAmount">Payment amount</label>
               <div class="amount-placeholder">
 				  <input type="text" readonly value='Rs. {{ out_ticket.total_amount }}'>
@@ -290,7 +318,7 @@
           <div class="expiry-date-group form-group">
               <label for="ExpiryDate">Expiry date</label>
               <input id="ExpiryDate" class="form-control" type="text" placeholder="MM / YY" maxlength="7" required></input>
-          </div>
+          </div> -->
           <!-- <div class="security-code-group form-group">
               <label for="SecurityCode">Security code</label>
               <div class="input-container" >
@@ -298,7 +326,7 @@
                   <i id="cvc" class="fa fa-question-circle"></i>
               </div>
           </div> -->
-          <button id="PayButton" class="btn btn-block btn-success submit-button" type="submit" style='margin-bottom:100px;'>
+          <button id="PayButton" class="btn btn-block btn-success submit-button" type="submit" style='margin-bottom:100px;' value="pay">
               <span class="submit-button-lock"></span>
               <span class="align-middle">Pay Now</span>
           </button>
@@ -329,5 +357,6 @@
 </script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 <script src="assets/js/jquery.payform.min.js" charset="utf-8"></script>
-{% endblock %}
+
 </body>
+{% endblock %}

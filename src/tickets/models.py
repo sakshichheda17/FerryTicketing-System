@@ -22,3 +22,4 @@ class Ticket(models.Model):
     booking_time = models.DateTimeField(null=True)
     journey_amount = models.DecimalField(null=True, max_digits=10, decimal_places=2)
     total_amount = models.DecimalField(null=True, max_digits=10, decimal_places=2)
+    passenger_details = models.CharField(max_length=200,null=True)

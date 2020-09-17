@@ -238,5 +238,14 @@ def checkout_view(request):
 		out_ticket.save()
 	
 	
-	
+	if request.method == 'POST':
+		passenger_list = request.POST.getlist('passenger')
+		passenger_details = ",".join(passenger_list)
+		out_ticket.passenger_details = passenger_details
+		if out_ticket.journey_type == "R":
+			in_ticket.passenger_details = passenger_details
+			in_ticket.save()
+
+		out_ticket.save()
+		
 	return render(request,'checkout.html',context)
