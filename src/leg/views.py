@@ -16,7 +16,7 @@ from django.db.models.functions import Now
 #     ticket.save()
 #     return ticket
     
-def get_leg(date,source,destination):
+def get_leg(date,ticket):
     date_int = (list(map(int,date.split('-')))) #convert to list of integers [year,month,date]
     d = datetime.date(date_int[0],date_int[1],date_int[2]) #pass integers to create datetime instance
     day = d.strftime("%a") #get day of that date
@@ -32,7 +32,7 @@ def get_leg(date,source,destination):
         # print([e.run_id for e in available_legs])
         # existing_legs = Leg.objects.all()
         for leg in available_legs:
-            if d == leg.date and leg.source == source and leg.destination == destination:
+            if d == leg.date and leg.source == ticket.source and leg.destination == ticket.destination and leg.available_seats >= (ticket.no_of_adults+ticket.no_of_children):
                 available.append(leg)
         #return legs
     # if len(available):
@@ -41,7 +41,7 @@ def get_leg(date,source,destination):
         for i in range(len(schedule)):
             run = schedule[i]
             if getattr(run, day) == True : #if there is run on the requested date's day, add new leg
-                if run.source == source and run.destination == destination:
+                if run.source == ticket.source and run.destination == ticket.destination:
                     Leg.objects.create(
                         date=d,
                         day=day,
@@ -55,7 +55,9 @@ def get_leg(date,source,destination):
                         PARS = run.PARS,
                         PCSS = run.PCSS,
                         PCRS = run.PCRS,
-                        max_seats = run.max_seats)
+                        max_seats = run.max_seats,
+                        sold_seats=0,
+                        available_seats=run.max_seats)
                     available.append(Leg.objects.latest('id'))
     print(available)
     return available
@@ -136,3 +138,10 @@ def get_leg(date,source,destination):
 #         return HttpResponseRedirect('/checkout',request)
 
 #     return render(request, "single.html", context)
+
+def update_leg_seats(ticket):
+    leg = Leg.objects.get(id=ticket.leg_id)
+    total_tickets_sold = ticket.no_of_adults + ticket.no_of_children
+    leg.sold_seats = leg.sold_seats + total_tickets_sold
+    leg.available_seats = leg.available_seats - total_tickets_sold
+    leg.save()

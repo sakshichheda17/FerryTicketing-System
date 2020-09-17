@@ -127,8 +127,8 @@ def choose_ferry_return(request):
         # date = request.POST['date'] #get date as string
         out_date = request.POST['date1']
         in_date = request.POST['date2']
-        out_available = get_leg(out_date,out_source,out_destination)
-        in_available = get_leg(in_date,in_source,in_destination)
+        out_available = get_leg(out_date,out_ticket)
+        in_available = get_leg(in_date,in_ticket)
         print(out_available, in_available)
         context.update({
             # 'day' : day,
@@ -164,7 +164,7 @@ def choose_ferry_single(request):
         out_source = out_ticket.source
         out_destination = out_ticket.destination
         out_date = request.POST['date']
-        out_available = get_leg(out_date,out_source,out_destination)       
+        out_available = get_leg(out_date,out_ticket)       
         print(out_available)
         context.update({
             'out_available': out_available

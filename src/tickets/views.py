@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from .models import Ticket
 from leg.models import Leg
+from leg.views import update_leg_seats
 import datetime
 
 # Create your views here.
@@ -36,6 +37,7 @@ def update_ticket(ticket,leg_id):
     ticket.arrival_time = leg.arrival_time
     ticket.departure_time = leg.departure_time
     ticket.save()
+    update_leg_seats(ticket)
     return ticket
 
 #On checkout page
