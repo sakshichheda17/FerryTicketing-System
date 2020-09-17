@@ -220,6 +220,7 @@
 	<td>{{ out_ticket.no_of_adults}}</td>
 	<td>{{ out_ticket.no_of_children}}</td>
 	<td>{{ out_leg.date }}</td>
+	<!-- <td>{{ out_leg.id }}</td> -->
 	<td>{{ out_ticket.booking_time}}</td>
 	<td>{{ out_ticket.journey_amount}}</td>
 	<td>{{ out_ticket.total_amount}}</td>
@@ -271,7 +272,7 @@
           <span class="amex"></span>
           <span class="discover"></span>
       </div>
-      <form id='PaymentForm' action="http://127.0.0.1:8000/select_route">
+      <form id='PaymentForm' action="http://127.0.0.1:8000/select_route" method='POST'>
           <div class="form-group">
               <label for="PaymentAmount">Payment amount</label>
               <div class="amount-placeholder">
@@ -297,7 +298,6 @@
                   <i id="cvc" class="fa fa-question-circle"></i>
               </div>
           </div> -->
-       
           <button id="PayButton" class="btn btn-block btn-success submit-button" type="submit" style='margin-bottom:100px;'>
               <span class="submit-button-lock"></span>
               <span class="align-middle">Pay Now</span>
