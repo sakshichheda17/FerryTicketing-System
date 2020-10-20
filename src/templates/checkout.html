@@ -301,7 +301,7 @@
       	{% endwith %}
       	</fieldset>
 
-          <!-- <div class="form-group">
+          <div class="form-group">
               <label for="PaymentAmount">Payment amount</label>
               <div class="amount-placeholder">
 				  <input type="text" readonly value='Rs. {{ out_ticket.total_amount }}'>
@@ -318,8 +318,8 @@
           <div class="expiry-date-group form-group">
               <label for="ExpiryDate">Expiry date</label>
               <input id="ExpiryDate" class="form-control" type="text" placeholder="MM / YY" maxlength="7" required></input>
-          </div> -->
-          <!-- <div class="security-code-group form-group">
+          </div> 
+           <!-- <div class="security-code-group form-group">
               <label for="SecurityCode">Security code</label>
               <div class="input-container" >
                   <input id="SecurityCode" class="form-control" type="text" required></input>
@@ -334,7 +334,7 @@
   </div>
 </div>
 
-<script type="text/javascript">
+<!-- <script type="text/javascript">
 	$(function () {
 	  $('[data-toggle="popover"]').popover();
 	  
@@ -347,7 +347,7 @@
 	  });
 	  
 	});
-</script>
+</script> -->
 <script>
 	document.getElementById("PaymentForm").onsubmit = function() {myFunction()};
 

@@ -15,13 +15,16 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path,include
-from passenger.views import register,login,select_route,checkout_view
+from passenger.views import register,login,select_route,checkout
 from passenger.views import choose_ferry_return,choose_ferry_single
 # from tickets.views import checkout_view
+from manager.views import dashboard,get_runs,add_run,edit_run,update_run,delete_run
 from django.contrib.auth import views as auth_views
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    
     path('login/', login ,name='login'),
     path('select_route/', select_route ,name='select_route'),
     path('register/', register,name='register'), 
@@ -29,5 +32,13 @@ urlpatterns = [
     path('return/', choose_ferry_return),
     path('single/', choose_ferry_single),
 
-    path('checkout/', checkout_view),
+    path('checkout/', checkout),
+
+    #manager
+    path('manager/',dashboard),
+    path('runs/',get_runs),
+    path('addrun/',add_run),
+    path('editrun/<int:id>',edit_run),
+    path('updaterun/<int:id>',update_run),
+    path('deleterun/<int:id>',delete_run),
 ]

@@ -1,0 +1,158 @@
+{% extends "admin_base.html" %}
+ 
+{% block title %}Edit Records{% endblock title %}
+ 
+{% block content %}
+<div class='container'>
+    <div class='row'>
+<div class="col-md-12">
+    <h4>Django CRUD (Create Read Update Delete) Example - Bootstrap Datatable</h4>  
+ <form method="POST" class="post-form" action="/updaterun/{{run.id}}">  
+   {% csrf_token %}  
+  <div class="container">  
+ <br>  
+  <div class="form-group row">  
+  <label class="col-sm-1 col-form-label"></label>  
+  <div class="col-sm-4">  
+  <h3>Update Details</h3>  
+  </div>  
+   </div>  
+  <div class="form-group row">  
+  <label class="col-sm-2 col-form-label">Run Id:</label>  
+  <div class="col-sm-4">  
+   <input type="text" class="form-control" name="id" id="id_id" maxlength="20" value="{{ run.id }}" readonly>  
+  </div>  
+   </div> 
+   <div class="form-group row">  
+        <label class="col-sm-2 col-form-label">run vessel:</label>  
+        <!-- <div class="col-sm-4">  
+        <input type="text" class="form-control" name="vessel_name" id="id_title" required maxlength="120" value="{{ run.vessel_name }}" />  
+        </div>   -->
+        <div class="col-sm-4"> 
+            <select name="vessel_name">
+                <option value="{{ run.vessel_name_id }}">{{ run.vessel_name }}</option>
+                {% for vessel in vessels %}
+                    {% if run.vessel_name|slugify != vessel.vessel_name|slugify  %}
+                        <option value="{{ vessel.id }}">{{ vessel }}</option>
+                    {% endif %} 
+                {% endfor %}
+            </select> 
+            
+            
+        </div> 
+    </div>  
+   <div class="form-group row">  
+  <label class="col-sm-2 col-form-label">run source:</label>  
+  <div class="col-sm-4">  
+   <input type="text" class="form-control" name="source" id="id_source" maxlength="120" value="{{ run.source }}" />  
+  </div>  
+   </div>  
+  <div class="form-group row">  
+  <label class="col-sm-2 col-form-label">run destination:</label>  
+  <div class="col-sm-4">  
+   <input type="text" class="form-control" name="destination" id="id_content" maxlength="200" value="{{ run.destination }}" />  
+  </div>  
+   </div> 
+   <div class="form-group row">  
+    <label class="col-sm-2 col-form-label">Max Seats:</label>  
+    <div class="col-sm-4">  
+     <input type="text" class="form-control" name="max_seats" id="id_content" maxlength="200" value="{{ run.max_seats }}" />  
+    </div>  
+    </div>
+
+   
+   <div class="form-group row"> 
+    <label class="col-sm-2 col-form-label ">Departure Time</label>  
+    <div class="col-sm-4">  
+        <input type="time" name="departure_time" id="id_content" value="{{ run.departure_time|time:'H:i:s'  }}" />  
+    </div> 
+    <label class="col-sm-2 col-form-label">Arrival Time</label>  
+    <div class="col-sm-4">  
+        <input type="time" name="arrival_time" id="id_content" value="{{ run.arrival_time|time:'H:i:s' }}"/>  
+    </div> 
+    
+  </div>  
+
+   <div class="form-group row">  
+      <label class="col-sm-2 col-form-label">PCSS</label>  
+      <div class="col-sm-4">  
+        <input type="text" class="form-control" name="PCSS" id="id_content" maxlength="200" value="{{ run.PCSS }}" />  
+      </div>  
+      <label class="col-sm-2 col-form-label">PCRS</label>  
+      <div class="col-sm-4">  
+        <input type="text" class="form-control" name="PCRS" id="id_content" maxlength="200" value="{{ run.PCRS }}" />  
+      </div>
+      <label class="col-sm-2 col-form-label">PASS</label>  
+      <div class="col-sm-4">  
+        <input type="text" class="form-control" name="PASS" id="id_content" maxlength="200" value="{{ run.PASS }}" />  
+      </div>  
+      <label class="col-sm-2 col-form-label">PARS</label>  
+      <div class="col-sm-4">  
+        <input type="text" class="form-control" name="PARS" id="id_content" maxlength="200" value="{{ run.PARS }}" />  
+      </div>
+   </div>
+   
+   <div class="form-group row">  
+    <label class="col-sm-1 col-form-label" style='padding-top:0; padding-bottom:0;'>Monday</label>  
+      <div class="col-sm-1">  
+        <input type="checkbox" class="form-check-input" name="Mon" id="id_active" {% if run.Mon %}checked{% endif %} value="{{ run.Mon }}" />  
+      </div> 
+      
+    <label class="col-sm-1 col-form-label" style='padding-top:0; padding-bottom:0;'>Tues</label>  
+    <div class="col-sm-1">  
+        <input type="checkbox" class="form-check-input" name="Tue" id="id_active" {% if run.Tue %}checked{% endif %} value="{{ run.Tue }}" />  
+    </div>  
+    <label class="col-sm-1 col-form-label" style='padding-top:0; padding-bottom:0;'>Wed</label>  
+    <div class="col-sm-1">
+        <input type="checkbox" class="form-check-input" name="Wed" id="id_active" {% if run.Wed %}checked{% endif %} value="{{ run.Wed }}" />  
+    </div> 
+    <label class="col-sm-1 col-form-label" style='padding-top:0; padding-bottom:0;'>Thur</label>  
+    <div class="col-sm-1">  
+        <input type="checkbox" class="form-check-input" name="Thu" id="id_active" {% if run.Thu %}checked{% endif %} value="{{ run.Thu }}" />  
+    </div> 
+  </div>
+  <div class="form-group row">  
+  <label class="col-sm-1 col-form-label" style='padding-top:0; padding-bottom:0;'>Fri</label>  
+  <div class="col-sm-1">  
+    <input type="checkbox" class="form-check-input" name="Fri" id="id_active" {% if run.Fri %}checked{% endif %} value="{{ run.Fri }}" />  
+  </div>  
+  <label class="col-sm-1 col-form-label" style='padding-top:0; padding-bottom:0;'>Sat</label>  
+  <div class="col-sm-1">
+    <input type="checkbox" class="form-check-input" name="Sat" id="id_active" {% if run.Sat %}checked{% endif %} value="{{ run.Sat }}" />  
+  </div> 
+  <label class="col-sm-1 col-form-label" style='padding-top:0; padding-bottom:0;'>Sun</label>  
+  <div class="col-sm-1">
+    <input type="checkbox" class="form-check-input" name="Sun" id="id_active" {% if run.Sun %}checked{% endif %} value="{{ run.Sun }}" />  
+  </div>
+  </div>
+
+  
+  <div class="form-group row">  
+  <label class="col-sm-1 col-form-label"></label>  
+  <div class="col-sm-4">  
+  <button type="submit" class="btn btn-success btn-md">Update</button>  
+  </div>  
+   </div>  
+  </div> 
+  
+  <div class='form-group'>
+    {% if form.errors %}
+      {% for field in form %}
+          {% for error in field.errors %}
+              <div class="alert alert-danger">
+                  <strong>{{ error|escape }}</strong>
+              </div>
+          {% endfor %}
+      {% endfor %}
+      {% for error in form.non_field_errors %}
+          <div class="alert alert-danger">
+              <strong>{{ error|escape }}</strong>
+          </div>
+      {% endfor %}
+  {% endif %}
+  </div>
+
+ </form>  
+ </div>
+</div>
+ {% endblock content %}  

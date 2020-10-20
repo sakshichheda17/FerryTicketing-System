@@ -99,7 +99,7 @@ def select_route(request):
 		if journey_type == 'R':
 			in_ticket = generate_ticket(obj,passenger_id,form,2)
 		form = TicketForm()
-		context['ticket'] = out_ticket #why did i do this?
+		# context['ticket'] = out_ticket #why did i do this?
 		if Ticket.objects.latest('id').journey_type == 'R':
 			return HttpResponseRedirect('/return',request)
 		else:
@@ -207,7 +207,7 @@ def choose_ferry_single(request):
 # 	in_ticket.save()
 
 	
-def checkout_view(request):
+def checkout(request):
 	passenger_id = request.session['passenger_id']
 	out_booking_time = request.session['out_booking_time']
 	
