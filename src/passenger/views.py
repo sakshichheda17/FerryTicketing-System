@@ -26,14 +26,13 @@ def login(request):
 			password = form.cleaned_data.get('password')
 			user = authenticate(username=username, password=password)            
 			if user is not None:            	
-				return redirect('/admin/')           
+				return redirect('/manager/')           
 			else:            	
 				if Passenger.objects.filter(username=username,password=password).exists():            		
 					messages.success(request, f'The passenger {username} was logged in successfully.')
 					passenger_id = Passenger.objects.get(username=username).id
 					request.session['passenger_id']=passenger_id
 					return redirect('select_route')
-					# return render(request,'select_route.html', {})
 
 				else:
 					messages.warning(request,'Please enter a valid username and password.')

@@ -18,7 +18,8 @@ from django.urls import path,include
 from passenger.views import register,login,select_route,checkout,home
 from passenger.views import choose_ferry_return,choose_ferry_single
 # from tickets.views import checkout_view
-from manager.views import dashboard,get_runs,add_run,edit_run,update_run,delete_run
+from run.views import get_runs,add_run,edit_run,update_run,delete_run
+from manager.views import view_dashboard
 from django.contrib.auth import views as auth_views
 from leg.views import view_leg,add_leg, edit_leg, delete_leg
 
@@ -36,7 +37,7 @@ urlpatterns = [
     path('checkout/', checkout),
 
     #manager
-    path('manager/',dashboard),
+    path('manager/',view_dashboard),
     path('runs/',get_runs),
     path('addrun/',add_run),
     path('editrun/<int:id>',edit_run),
