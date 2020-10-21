@@ -132,3 +132,10 @@ STATIC_URL = '/static/'
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 LOGIN_REDIRECT_URL = 'select_route'
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_USE_TLS = True
+EMAIL_PORT = 587
+EMAIL_HOST_USER = 'ferryticketingsystem@gmail.com'#sender's email-id 
+EMAIL_HOST_PASSWORD = 'Ferry@123'#password associated with above email-id 

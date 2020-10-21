@@ -15,17 +15,18 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path,include
-from passenger.views import register,login,select_route,checkout
+from passenger.views import register,login,select_route,checkout,home
 from passenger.views import choose_ferry_return,choose_ferry_single
 # from tickets.views import checkout_view
 from manager.views import dashboard,get_runs,add_run,edit_run,update_run,delete_run
 from django.contrib.auth import views as auth_views
-
+from leg.views import view_leg,add_leg, edit_leg, delete_leg
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    
+    path('home/', home ,name='home'),
     path('login/', login ,name='login'),
+
     path('select_route/', select_route ,name='select_route'),
     path('register/', register,name='register'), 
 
@@ -41,4 +42,11 @@ urlpatterns = [
     path('editrun/<int:id>',edit_run),
     path('updaterun/<int:id>',update_run),
     path('deleterun/<int:id>',delete_run),
+
+    #Leg
+    path('leg_dashboard/',view_leg,name='leg_dashboard'),
+    path('add_leg/',add_leg,name='add_leg'),
+    path('edit_leg/<int:id>',edit_leg),
+    path('delete_leg/<int:id>',delete_leg),
+
 ]

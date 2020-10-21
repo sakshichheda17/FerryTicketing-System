@@ -1,21 +1,14 @@
-from django.shortcuts import render
+from django.shortcuts import render,redirect
 import datetime
 from run.models import Run
 from leg.models import Leg
+from leg.forms import LegForm
+from vessel.models import Vessel
+from django.contrib import messages
 from django.http import HttpResponseRedirect
 from tickets.models import Ticket
 from django.db.models.functions import Now
 
-# def update_ticket(ticket,leg_id):
-#     leg = Leg.objects.get(id=leg_id)
-#     ticket.leg_id = leg_id
-#     ticket.booking_time = str(datetime.datetime.now())
-#     ticket.vessel_name = leg.vessel_name
-#     ticket.arrival_time = leg.arrival_time
-#     ticket.departure_time = leg.departure_time
-#     ticket.save()
-#     return ticket
-    
 def get_leg(date,ticket):
     date_int = (list(map(int,date.split('-')))) #convert to list of integers [year,month,date]
     d = datetime.date(date_int[0],date_int[1],date_int[2]) #pass integers to create datetime instance
@@ -63,81 +56,48 @@ def get_leg(date,ticket):
     return available
 
 
-# def get_return_view(request):
-    
-#     context = {}
-#     passenger_id = request.session['passenger_id']
-#     if request.method == 'POST' and request.POST['Submit']=='Find Ferry':
-#         formtype = request.POST['Submit']
-#         print(request.POST)
-#         context.update({'formtype': formtype})
-#         in_ticket = list(Ticket.objects.filter(passenger_id=passenger_id))[-1]
-#         out_ticket = list(Ticket.objects.filter(passenger_id=passenger_id))[-2]
-#         in_source = in_ticket.source
-#         in_destination = in_ticket.destination
-#         out_source = out_ticket.source
-#         out_destination = out_ticket.destination
-#         # date = request.POST['date'] #get date as string
-#         out_date = request.POST['date1']
-#         in_date = request.POST['date2']
-#         out_available = get_leg(out_date,out_source,out_destination)
-#         in_available = get_leg(in_date,in_source,in_destination)
-                
-#         context.update({
-#             # 'day' : day,
-#             'out_available': out_available,
-#             'in_available': in_available
-#         }) 
-#     # ferry is selected
-#     if request.method == 'POST' and request.POST['Submit']=='Ok':
-#         print(request.POST)
-#         request.session['out_ferry_id'] = request.POST['out_ferry_id']
-#         request.session['in_ferry_id'] = request.POST['in_ferry_id']
-#         in_ticket = list(Ticket.objects.filter(passenger_id=passenger_id))[-1]
-#         out_ticket = list(Ticket.objects.filter(passenger_id=passenger_id))[-2]
-#         out_ticket = update_ticket(out_ticket,request.POST['out_ferry_id'])
-#         request.session['booking_time'] = out_ticket.booking_time
-#         in_ticket = update_ticket(in_ticket,request.POST['in_ferry_id'])
-#         print(in_ticket.booking_time)
-#         request.session['in_booking_time'] = in_ticket.booking_time
-#         return HttpResponseRedirect('/checkout',request)
+def view_leg(request):
+    all_legs = Leg.objects.all()
+    return render(request,"leg_dashboard.html",{'all_legs':all_legs}) 
 
-#     return render(request, "return.html", context)
 
-# def get_single_view(request):
-    
-#     context = {}
-#     passenger_id = request.session['passenger_id']
-#     if request.method == 'POST' and request.POST['Submit']=='Find Ferry':
-#         formtype = request.POST['Submit']
-#         # print(request.POST)
-#         context.update({'formtype': formtype})
-#         # date = request.POST['date'] #get date as string
-#         out_ticket = list(Ticket.objects.filter(passenger_id=passenger_id))[-1]
-#         out_source = out_ticket.source
-#         out_destination = out_ticket.destination
-#         out_date = request.POST['date']
-#         out_available = get_leg(out_date,out_source,out_destination)       
-                
-#         context.update({
-#             'out_available': out_available
-#         }) 
-#     # ferry is selected
-#     if request.method == 'POST' and request.POST['Submit']=='Ok':
-#         request.session['out_ferry_id'] = request.POST['out_ferry_id']
-#         request.session['in_ferry_id'] = None
-#         leg = Leg.objects.get(id=request.POST['out_ferry_id'])
+def add_leg(request):
+    vessels=Vessel.objects.all()
+    if request.method == "POST":  
+        form = LegForm(request.POST)  
         
-#         # update ticket
-#         out_ticket = list(Ticket.objects.filter(passenger_id=passenger_id))[-1]
-#         print(out_ticket)
-#         out_ticket = update_ticket(out_ticket,request.POST['out_ferry_id'])
-#         print('hello')
-#         request.session['out_booking_time'] = out_ticket.booking_time
-#         request.session['in_booking_time'] = None
-#         return HttpResponseRedirect('/checkout',request)
+        if form.is_valid():  
+            form.save()  
+            return redirect('leg_dashboard') 
+    else:  
+        form = LegForm() 
+    return render(request,"add_leg.html",{'form':form, 'vessels': vessels}) 
 
-#     return render(request, "single.html", context)
+
+def edit_leg(request,id):
+    leg = Leg.objects.get(id=id)
+    vessels=Vessel.objects.all()
+    if request.method == "POST": 
+        form = LegForm(request.POST, instance = leg) 
+        print(form)
+        if form.is_valid():  
+            form.save()  
+            return redirect("leg_dashboard") 
+    
+    else:
+        print(leg.date)
+        print(leg.arrival_time)
+    
+    return render(request,"edit_leg.html",{'leg':leg, 'vessels': vessels}) 
+    print(form.errors)
+
+def delete_leg(request, id):  
+    leg = Leg.objects.get(id=id)
+    leg.delete()  
+    print(leg.id)
+    messages.success(request, f'The leg having id {id} was deleted successfully.')
+    return redirect("leg_dashboard")
+
 
 def update_leg_seats(ticket):
     leg = Leg.objects.get(id=ticket.leg_id)

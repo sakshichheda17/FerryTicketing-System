@@ -1,0 +1,113 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+    
+    <div class="content-section col-md-8 container">   
+        <form method="POST" class="post-form">  
+            {% csrf_token %}  
+        <fieldset class="form-group">
+        <legend class="border-bottom mb-4">Add New Leg</legend>
+
+        <div class="form-group row">  
+         <label class="col-sm-2 col-form-label">Date</label>  
+         <div class="col-sm-4">  
+             {{form.date}}
+         </div>  
+         <label class="col-sm-2 col-form-label">Run id</label>  
+         <div class="col-sm-4">  
+             {{form.run_id}}
+         </div>  
+          </div>  
+         <div class="form-group row">  
+         <label class="col-sm-2 col-form-label">Day</label>  
+         <div class="col-sm-4">  
+           {{ form.day }}  
+         </div>  
+          </div>  
+        <div class="form-group row">  
+        <label class="col-sm-2 col-form-label">Source</label>  
+        <div class="col-sm-4">  
+            {{ form.source }}  
+        </div>  
+        
+        <label class="col-sm-2 col-form-label">Destination</label>  
+        <div class="col-sm-4">  
+            {{ form.destination }}  
+        </div>  
+        </div> 
+
+        <div class="form-group row">  
+            <label class="col-sm-2 col-form-label">Leg vessel:</label>  
+            <div class="col-sm-4"> 
+                <select class="form-control" name="vessel_name" value="Select Vessel Name">
+                    <option value="Select a Vessel">Select a Vessel</option>
+                    {% for vessel in vessels %}
+                            <option value="{{ vessel }}">{{ vessel }}</option>
+                    {% endfor %}
+                </select> 
+            </div> 
+        </div>
+        
+         <div class="form-group row">  
+         <label class="col-sm-3 col-form-label">Departure Time</label>  
+         <div class="col-sm-3">  
+            {{ form.departure_time }}
+         </div>  
+         <label class="col-sm-3 col-form-label">Arrival Time</label>  
+         <div class="col-sm-3">  
+            {{ form.arrival_time }}
+         </div>
+        </div>  
+        <div class="form-group row">  
+            <label class="col-sm-2 col-form-label">Adult Single</label>  
+            <div class="col-sm-4">  
+                {{ form.PASS }}  
+            </div>  
+            <label class="col-sm-2 col-form-label">Adult Return</label>  
+            <div class="col-sm-4">  
+                {{ form.PARS }}  
+            </div> 
+        </div>
+        <div class="form-group row"> 
+            <label class="col-sm-2 col-form-label">Child Single</label>  
+            <div class="col-sm-4">  
+                {{ form.PCSS }}  
+            </div> 
+            <label class="col-sm-2 col-form-label">Child Return</label>  
+            <div class="col-sm-4">  
+                {{ form.PCRS }}  
+            </div>
+        </div>
+        <div class="form-group row">  
+            <label class="col-sm-2 col-form-label">Maximum Seats</label>  
+            <div class="col-sm-4">  
+                {{ form.max_seats }}  
+            </div>  
+        </div> 
+        <div class="form-group row">  
+            <label class="col-sm-2 col-form-label">Available Seats</label>  
+            <div class="col-sm-4">  
+                {{ form.available_seats }}  
+            </div>  
+        
+            <label class="col-sm-2 col-form-label">Sold Seats</label>  
+            <div class="col-sm-4">  
+                {{ form.sold_seats }}  
+            </div>  
+        </div> 
+        <div class="form-group row">  
+            <label class="col-sm-2 col-form-label">Cancelled</label>  
+            <div class="col-sm-4">  
+                {{ form.cancelled_status }}  
+            </div>  
+        </div> 
+         <div class="form-group rowcol-sm-4">  
+         <button type="submit" class="btn btn-outline-info">Add Leg</button>  
+          </div>  
+        </fieldset>
+         </div>  
+        </form>  
+       </div>
+
+{% endblock %}

@@ -11,6 +11,13 @@ from leg.models import Leg
 from tickets.views import generate_ticket,calc_journey_amount,calc_total_amount,update_ticket
 from leg.views import get_leg
 
+from django.conf import settings 
+# from django.core.mail import send_mail 
+
+from django.core.mail import EmailMultiAlternatives
+from django.template.loader import render_to_string
+from django.utils.html import strip_tags
+
 def login(request):
 	if request.method == "POST":
 		form = PassengerLoginForm(request.POST)        
@@ -60,27 +67,6 @@ def register(request):
 	return render(request,'register.html',{'form': form })
 
 
-# def generate_ticket(obj,passenger_id,form,ticket_no):
-# 	#ticket_no =1 for single way ticket
-# 	#ticket_no=2 for return way ticket
-# 	# print(form.cleaned_data['journey_type'])
-# 	ticket = Ticket.objects.create(
-# 			passenger_id = passenger_id,
-# 			no_of_adults = form.cleaned_data['no_of_adults'],
-# 			no_of_children = form.cleaned_data['no_of_children'],
-# 			journey_type = form.cleaned_data['journey_type']
-# 		)
-# 	#For Single Way Ticket, source and destination will be same as passenger's route choice
-# 	if ticket_no==1: 
-# 		ticket.source = obj.source
-# 		ticket.destination = obj.destination
-# 	#For Return Way Ticket, source and destination will be opposite of passenger's route choice
-# 	elif ticket_no==2:
-# 		ticket.source = obj.destination
-# 		ticket.destination = obj.source
-# 	ticket.save()
-# 	return ticket
-
 def select_route(request):	
 	passenger_id = request.session['passenger_id']
 
@@ -99,7 +85,7 @@ def select_route(request):
 		if journey_type == 'R':
 			in_ticket = generate_ticket(obj,passenger_id,form,2)
 		form = TicketForm()
-		# context['ticket'] = out_ticket #why did i do this?
+		context['ticket'] = out_ticket #why did i do this?
 		if Ticket.objects.latest('id').journey_type == 'R':
 			return HttpResponseRedirect('/return',request)
 		else:
@@ -186,26 +172,6 @@ def choose_ferry_single(request):
 
     return render(request, "single.html", context)
 
-# def calc_journey_amount(ticket):
-# 	leg = Leg.objects.get(id=ticket.leg_id)
-# 	adults = ticket.no_of_adults
-# 	children = ticket.no_of_children
-# 	journey_type = ticket.journey_type
-
-# 	if journey_type == 'S':
-# 		journey_amount = leg.PASS*adults + leg.PCSS*children
-# 	else:
-# 		journey_amount = leg.PARS*adults + leg.PCRS*children
-# 	ticket.journey_amount = journey_amount
-# 	ticket.save()
-
-# def calc_total_amount(out_ticket,in_ticket):
-# 	total_amount = out_ticket.journey_amount + in_ticket.journey_amount
-# 	out_ticket.total_amount = total_amount
-# 	in_ticket.total_amount = total_amount
-# 	out_ticket.save()
-# 	in_ticket.save()
-
 	
 def checkout(request):
 	passenger_id = request.session['passenger_id']
@@ -247,5 +213,23 @@ def checkout(request):
 			in_ticket.save()
 
 		out_ticket.save()
-		
+		passenger = Passenger.objects.get(id=passenger_id)
+
+		html_content = render_to_string("email_template.html",context)
+		text_content = strip_tags(html_content)
+		subject = 'Booking Confirmed'
+		message = text_content
+		email_from = settings.EMAIL_HOST_USER
+		recipient_list = [passenger.email]
+		email = EmailMultiAlternatives(subject, message, email_from, recipient_list)
+		email.attach_alternative(html_content,"text/html")
+		email.send()
+				
+		messages.success(request, f'Congratulations! Booking Confirmed.')
+		return redirect('home')
+
 	return render(request,'checkout.html',context)
+
+
+def home(request):
+	return render(request,'home.html')
