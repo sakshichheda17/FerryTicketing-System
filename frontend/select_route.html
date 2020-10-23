@@ -1,0 +1,70 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+
+
+{% block nav %}
+
+	<a class="nav-item nav-link" href="{% url 'login' %}">Logout</a>
+	
+{% endblock %}
+
+{% block redirect %}
+
+	<a href="{% url 'select_route' %}" class="del-msg">&times;</a>
+{% endblock %}
+
+{% block content %}
+
+<style>
+body {
+ background-image: url("/static/photo.jpeg");
+}
+.form
+{
+border-radius: 5px;
+background-color: #f2f2f2;
+padding: 20px;
+width:50%;
+margin-left:265px;
+padding-bottom:50px;
+}
+</style>
+<body>
+<div class="form" >
+<form>
+
+<legend class="border-bottom mb-4">Select Route</legend>
+<div class="form-group">
+	<form method="POST">
+		<div>
+			{% csrf_token %}
+			{% for item in routes %}
+			<!-- <input type="radio" id="{{ forloop.counter }}" name="route" value="{{ item.id }}">
+			<label for="other">
+				<span class="source">{{ item.source }}</span>
+				->
+				<span class="destination">{{ item.destination }}</span>
+			</label><br> -->
+			<div class="custom-control custom-radio content-section btn-outline-info">
+				<input type="radio" id="{{ forloop.counter }}" name="route" value="{{ item.id }}" >
+				<label for="other">
+					<span class="source">{{ item.source }}</span>
+					to
+					<span class="destination">{{ item.destination }}</span>
+				</label>
+			</div>
+			{% endfor %}
+			{{ form.as_p }}
+			<!-- {% if ticket %}
+				{{ ticket.source }} -> {{ ticket.destination }}
+				{{ ticket.no_of_adults }} , {{ ticket.no_of_children }}
+				{{ ticket.journey_type }}
+			{% endif %}
+			 -->
+		</div>
+		<input class="btn btn-primary" type="submit" value="Save">
+	</form>
+	</div>
+{% endblock %}
+
+

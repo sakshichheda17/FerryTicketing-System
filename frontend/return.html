@@ -1,0 +1,119 @@
+{% extends 'base.html'%}
+
+{% block nav %}
+
+	<a class="nav-item nav-link" href="{% url 'login' %}">Logout</a>
+	
+{% endblock %}
+{% block content %}
+
+
+<style>
+body {
+ background-image: url("/static/photo.jpeg");
+}
+.form
+{
+border-radius: 5px;
+background-color: #f2f2f2;
+padding: 20px;
+width:45%;
+margin-left:280px;
+padding-bottom:50px;
+}
+</style>
+<body>
+<div class="form" >
+<form>
+
+<fieldset class="form-group">
+  <legend class="border-bottom mb-4">Select Date</legend>
+</fieldset>
+   <form action="" method="POST">
+       {% csrf_token %}
+       <input type="date" name="date1" id="today">
+       <input type="date" name="date2" id="today">
+       <input type="submit" name="Submit" value="Find Ferry" class="btn btn-primary">
+       <br>
+       
+       
+       <form action="" method="post">
+        {% csrf_token %}
+        {% if out_available%}
+        <fieldset id='outgoing'>
+          <legend class="mb-4">For One Way</legend>
+       {% for ferry in out_available %}
+       
+       <input class="form-check-input" type="radio" id="{{ forloop.counter }}" name="out_ferry_id" value="{{ ferry.id }}">
+       <label for="other">
+         <table>
+        <tr>
+        <th>Ferry ID: </th><td>{{ ferry.id }}</td></tr>
+        <tr><th>Source: </th><td>{{ ferry.source }}</td></tr>
+        <!-- <tr><th>Destination: </th><td>{{ ferry.destination }}</td></tr>
+        <tr><th>Vessel: </th><td>{{ ferry.vessel_name }}</td></tr> -->
+        <tr><th>Source: </th><td>{{ ferry.source }}</td></tr>
+        <tr><th>Destination:  </th><td>{{ ferry.destination }}</td></tr>
+        <tr><th>Date: </th><td>{{ ferry.date }}</td></tr>
+        <tr><th>Arrival Time: </th><td>{{ ferry.arrival_time }}</td></tr>
+        <tr><th>Departure Time:  </th><td>{{ ferry.departure_time }}</td></tr>
+        </table>
+      </label><br>
+       
+       {% endfor %}
+      </fieldset>
+       <!-- <input type="submit" name="Submit" value="Ok" class="btn btn-primary">
+    </form> -->
+     {% endif %}
+     <br>
+     {% if out_available%}
+       
+     <!-- <form action="" method="post">
+      {% csrf_token %} -->
+      <fieldset id='incoming'>
+        <legend class="mb-4">For Return</legend>
+     {% for ferry in in_available %}
+     <input type="radio" id="{{ forloop.counter }}" name="in_ferry_id" value="{{ ferry.id }}">
+     <label for="other">
+      <table>
+        <tr>
+        <th>Ferry ID: </th><td>{{ ferry.id }}</td></tr>
+        <!-- <tr><th>Source: </th><td>{{ ferry.source }}</td></tr>
+        <tr><th>Destination: </th><td>{{ ferry.destination }}</td></tr> -->
+        <tr><th>Source: </th><td>{{ ferry.source }}</td></tr>
+        <tr><th>Destination:  </th><td>{{ ferry.destination }}</td></tr>
+        <tr><th>Vessel: </th><td>{{ ferry.vessel_name }}</td></tr>
+        <tr><th>Date: </th><td>{{ ferry.date }}</td></tr>
+        <tr><th>Arrival Time: </th><td>{{ ferry.arrival_time }}</td></tr>
+        <tr><th>Departure Time:  </th><td>{{ ferry.departure_time }}</td></tr>
+        </table>
+      </label><br>
+     
+     {% endfor %}
+    </fieldset>
+     <input type="submit" name="Submit" value="Ok" class="btn btn-primary">
+  </form>
+   {% endif %}
+      
+   </form>
+  
+   
+   <!-- <form action="" method="POST">
+      {% csrf_token %}
+      <input type="date" name="date" id="today">
+      <input type="submit" name="Submit" value="Date2" class="btn btn-primary">
+      {% if day %}
+        {{day}}
+      {% endif %}
+      <br>
+      {% if available and formtype == 'Date2'%}
+      
+        {% for ferry in available %}
+           Ferry_id {{ ferry.id }}<br>
+           Date {{ ferry.date }}<br>
+           Route id {{ ferry.route_id }}<br>
+        {% endfor %}
+       
+      {% endif %}
+  </form> -->
+   {% endblock %}

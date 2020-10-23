@@ -1,0 +1,181 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+<div class="content-section col-md-8 container">   
+    <form method="POST" class="post-form">  
+        {% csrf_token %}  
+    <fieldset class="form-group">
+    <legend class="border-bottom mb-4">Update Leg Details</legend>
+
+    <div class="form-group row">  
+     <label class="col-sm-2 col-form-label">Date</label>  
+     <div class="col-sm-4">   
+        <input type="date" class="form-control" name="date" value="{{leg.date | date:'Y-m-d'}}">
+     </div>  
+     <label class="col-sm-2 col-form-label">Run id</label>   
+     <div class="col-sm-4">   
+        <input type="text" class="form-control" name="run_id" value="{{leg.run_id}}">
+     </div>
+      </div>  
+     <div class="form-group row">  
+     <label class="col-sm-2 col-form-label">Day</label>  
+     <div class="col-sm-4">   
+        <!--<input type="text" class="form-control" name="day" value="{{ leg.day }}">-->
+     
+        <select class="form-control" name="day">
+            <option value="{{ leg.day }}">{{ leg.day }}</option>
+                {% if leg.day != "Monday"  %}
+                    <option value="Monday">Monday</option>
+                {% endif %} 
+                {% if leg.day != "Tuesday"  %}
+                    <option value="Tuesday">Tuesday</option>
+                {% endif %} 
+                {% if leg.day != "Wednesday"  %}
+                    <option value="Wednesday">Wednesday</option>
+                {% endif %} 
+                {% if leg.day != "Thursday"  %}
+                    <option value="Thursday">Thursday</option>
+                {% endif %} 
+                {% if leg.day != "Friday"  %}
+                    <option value="Friday">Friday</option>
+                {% endif %} 
+                {% if leg.day != "Saturday"  %}
+                    <option value="Saturday">Saturday</option>
+                {% endif %} 
+                {% if leg.day != "Sunday"  %}
+                    <option value="Sunday">Sunday</option>
+                {% endif %}
+        </select>
+
+    </div>
+    </div> 
+    <div class="form-group row">  
+    <label class="col-sm-2 col-form-label">Source</label>    
+    <div class="col-sm-4">   
+        <input type="text" class="form-control" name="source" value="{{ leg.source }}">
+    </div> 
+
+    <label class="col-sm-2 col-form-label">Destination</label>      
+    <div class="col-sm-4">   
+        <input type="text" class="form-control" name="destination" value=" {{ leg.destination }} ">
+    </div> 
+    </div> 
+ 
+    <div class="form-group row">  
+        <label class="col-sm-2 col-form-label">Leg vessel:</label>  
+        <div class="col-sm-4"> 
+            <select class="form-control" name="vessel_name">
+                <option value="{{ leg.vessel_name }}">{{ leg.vessel_name }}</option>
+                {% for vessel in vessels %}
+                    {% if leg.vessel_name|slugify != vessel.vessel_name|slugify  %}
+                        <option value="{{ vessel }}">{{ vessel }}</option>
+                    {% endif %} 
+                {% endfor %}
+            </select> 
+        </div> 
+    </div>
+
+    <!--<div class="form-group row">  
+        <label class="col-sm-2 col-form-label">Leg vessel:</label>  
+        <div class="col-sm-4"> 
+            <select class="form-control" name="vessel_name">
+                <option value="{{ leg.vessel_name }}">{{ leg.vessel_name }}</option>
+                {% for vessel in vessels %}
+                    {% if leg.vessel_name|slugify != vessel.vessel_name|slugify  %}
+                        <option value="{{ vessel.id }}">{{ vessel }}</option>
+                    {% endif %} 
+                {% endfor %}
+            </select>          
+        </div> 
+    </div>  -->
+
+     <div class="form-group row">  
+     <label class="col-sm-3 col-form-label">Departure Time</label>     
+     <div class="col-sm-3">   
+        <input type="time" class="form-control" name="departure_time" value="{{ leg.departure_time |time:'h:i:s'}}">
+    </div> 
+     <label class="col-sm-3 col-form-label">Arrival Time</label>         
+    <div class="col-sm-3">   
+        <input type="time" class="form-control" name="arrival_time" value="{{ leg.arrival_time |time:'h:i:s'}}">
+    </div> 
+    </div>  
+    <div class="form-group row">  
+        <label class="col-sm-2 col-form-label">Adult Single</label>             
+        <div class="col-sm-4">   
+            <input type="number" class="form-control" name="PASS" value="{{ leg.PASS }}">
+         </div> 
+        <label class="col-sm-2 col-form-label">Adult Return</label>               
+        <div class="col-sm-4">   
+            <input type="number" class="form-control" name="PARS" value="{{ leg.PARS }}">
+        </div> 
+    </div>
+    <div class="form-group row"> 
+        <label class="col-sm-2 col-form-label">Child Single</label>    
+            <div class="col-sm-4">   
+                <input type="number" class="form-control" name="PCSS" value="{{ leg.PCSS }}">
+            </div> 
+        <label class="col-sm-2 col-form-label">Child Return</label>    
+            <div class="col-sm-4">   
+                <input type="number" class="form-control" name="PCRS" value="{{ leg.PCRS }}">
+            </div> 
+    </div>
+    <div class="form-group row">  
+        <label class="col-sm-2 col-form-label">Maximum Seats</label>    
+            <div class="col-sm-4">   
+                <input type="number" class="form-control" name="max_seats" value="{{ leg.max_seats }}">
+            </div> 
+    </div> 
+    <div class="form-group row">  
+        <label class="col-sm-2 col-form-label">Available Seats</label>   
+            <div class="col-sm-4">   
+                <input type="number" class="form-control" name="available_seats" value="{{ leg.available_seats }}">
+            </div> 
+    
+        <label class="col-sm-2 col-form-label">Sold Seats</label>    
+            <div class="col-sm-4">   
+                <input type="number" class="form-control" name="sold_seats" value="{{ leg.sold_seats }}">
+            </div> 
+    </div> 
+    
+    <div class="form-group row">  
+        <label class="col-sm-2 col-form-label">Cancelled</label>  
+        <div class="col-sm-4"> 
+            <select class="form-control" name="cancelled_status">
+                {% if leg.cancelled_status == False %}
+                <option value={{leg.cancelled_status}}>No</option>
+                <option value="True">Yes</option>
+                {% else %}
+                <option value={{leg.cancelled_status}}>Yes</option>
+                <option value="False">No</option>
+                {% endif %}
+               
+            </select> 
+        </div> 
+    </div>
+     <div class="form-group rowcol-sm-4">  
+     <button type="submit" class="btn btn-outline-info">Edit Leg</button>  
+      </div>  
+    </fieldset>
+     </div>  
+    </form>  
+   </div>
+
+   <div class='form-group'>
+    {% if form.errors %}
+      {% for field in form %}
+          {% for error in field.errors %}
+              <div class="alert alert-danger">
+                  <strong>{{ error|escape }}</strong>
+              </div>
+          {% endfor %}
+      {% endfor %}
+      {% for error in form.non_field_errors %}
+          <div class="alert alert-danger">
+              <strong>{{ error|escape }}</strong>
+          </div>
+      {% endfor %}
+  {% endif %}
+  </div>
+{% endblock %}

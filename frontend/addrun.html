@@ -1,0 +1,182 @@
+{% extends 'admin_base.html' %}
+{% block title %}Add Run{% endblock %}
+{% block content %}
+
+<style>
+body {
+ background-image: url("/static/photo.jpeg");
+}
+.form
+{
+border-radius: 5px;
+background-color: #f2f2f2;
+padding: 20px;
+width:65%;
+margin-left:175px;
+padding-bottom:50px;
+}
+</style>
+<body>
+  {% load crispy_forms_tags %}
+<div class="form" >
+<form>
+
+<div class='container'>
+  <div class='form-group'>
+  {% if form.errors %}
+    {% for field in form %}
+        {% for error in field.errors %}
+            <div class="alert alert-danger">
+                <strong>{{ error|escape }}</strong>
+            </div>
+        {% endfor %}
+    {% endfor %}
+    {% for error in form.non_field_errors %}
+        <div class="alert alert-danger">
+            <strong>{{ error|escape }}</strong>
+        </div>
+    {% endfor %}
+{% endif %}
+</div>
+<div class='row'>
+ 
+<div class="col-md-12">
+   
+         
+ <form method="POST" class="post-form" action="/addrun/">  
+   {% csrf_token %}  
+  <div class="container">  
+ <br>  
+  <div class="form-group row">  
+  <!-- <label class="col-sm-1 col-form-label"></label>   -->
+  <div class="col-sm-4">  
+  <h4>Enter Details</h4>  
+  </div>  
+   </div>  
+   
+   <div class="form-group row">  
+  <label class="col-sm-2 col-form-label">Source</label>  
+  <div class="col-sm-4">  
+    {{ form.source }}  
+  </div>
+  <label class="col-sm-2 col-form-label">Destination</label>  
+  <div class="col-sm-4">  
+    {{ form.destination }}  
+  </div>   
+   </div>  
+   <hr>
+   
+  <div class="form-group row">  
+    <!-- <label class="col-sm-2 col-form-label ">Departure Time</label>  
+    <div class="col-sm-4">  
+      {{ form.departure_time }} 
+    </div>   -->
+    <label class="col-sm-2 col-form-label">Arrival Time</label>  
+    <div class="col-sm-4">  
+      {{ form.arrival_time }} 
+    </div> 
+    <label class="col-sm-2 col-form-label ">Departure Time</label>  
+    <div class="col-sm-4">  
+      {{ form.departure_time }} 
+    </div>
+  </div>  
+  
+  <!-- <div class="form-group row">  
+    <div class="col-sm-6">  
+      <h6>*Accepted Format: %H:%M:%S (Eg. 10:00:00)</h6>  
+    </div>  
+  </div>  -->
+
+  <hr>
+   <div class="form-group row">   
+    <div class="col-sm-4">  
+    <h4>Enter Fares</h4>  
+    </div>  
+  </div> 
+
+   <div class="form-group row">  
+      <label class="col-sm-2 col-form-label">PCSS</label>  
+      <div class="col-sm-4">  
+        {{ form.PCSS }}  
+      </div>  
+      <label class="col-sm-2 col-form-label">PCRS</label>  
+      <div class="col-sm-4">  
+        {{ form.PCRS }}  
+      </div>
+      <label class="col-sm-2 col-form-label">PASS</label>  
+      <div class="col-sm-4">  
+        {{ form.PASS }}  
+      </div>  
+      <label class="col-sm-2 col-form-label">PARS</label>  
+      <div class="col-sm-4">  
+        {{ form.PARS }}  
+      </div>
+   </div>  
+   <hr>
+  <div class="form-group row">  
+    <label class="col-sm-1 col-form-label" style='padding-top:0; padding-bottom:0;'>Monday</label>  
+      <div class="col-sm-1">  
+        {{ form.Mon }}  
+      </div> 
+      
+    <label class="col-sm-1 col-form-label" style='padding-top:0; padding-bottom:0;'>Tues</label>  
+    <div class="col-sm-1">  
+      {{ form.Tue }} 
+    </div>  
+    <label class="col-sm-1 col-form-label" style='padding-top:0; padding-bottom:0;'>Wed</label>  
+    <div class="col-sm-1">
+      {{ form.Wed }} 
+    </div> 
+    <label class="col-sm-1 col-form-label" style='padding-top:0; padding-bottom:0;'>Thur</label>  
+    <div class="col-sm-1">  
+      {{ form.Thu }}  
+    </div> 
+  </div>
+  <div class="form-group row">  
+  <label class="col-sm-1 col-form-label" style='padding-top:0; padding-bottom:0;'>Fri</label>  
+  <div class="col-sm-1">  
+    {{ form.Fri }} 
+  </div>  
+  <label class="col-sm-1 col-form-label" style='padding-top:0; padding-bottom:0;'>Sat</label>  
+  <div class="col-sm-1">
+    {{ form.Sat }} 
+  </div> 
+  <label class="col-sm-1 col-form-label" style='padding-top:0; padding-bottom:0;'>Sun</label>  
+  <div class="col-sm-1">
+    {{ form.Sun }} 
+  </div>
+  </div>
+  <hr>
+  <div class="form-group row">  
+    <label class="col-sm-2 col-form-label">Vessel</label>  
+    <div class="col-sm-4">  
+      {{ form.vessel_name }}  
+    </div>
+  </div>
+  <div class="form-group row">  
+    <label class="col-sm-2 col-form-label">Maximum Seats</label>  
+    <div class="col-sm-4">  
+      {{ form.max_seats }}  
+    </div>
+  </div>
+  <div class="form-group row">  
+  <label class="col-sm-1 col-form-label"></label>  
+  <div class="col-sm-4">  
+  <button type="submit" class="btn btn-primary">Submit</button>  
+  </div>  
+   </div>  
+  </div>  
+ </form>  
+
+ 
+</div> 
+</div>
+</div>
+
+{% endblock %}
+
+{% block script %}
+
+{% endblock %}
+
+
