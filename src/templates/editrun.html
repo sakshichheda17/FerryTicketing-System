@@ -1,8 +1,28 @@
 {% extends "admin_base.html" %}
- 
-{% block title %}Edit Records{% endblock title %}
- 
-{% block content %}
+ {% block title %}Edit Records{% endblock title %}
+ {% block content %}
+
+
+<style>
+body {
+ background-image: url("/static/photo.jpeg");
+}
+.form
+{
+border-radius: 5px;
+background-color: #f2f2f2;
+padding: 20px;
+width:90%;
+margin-left:75px;
+padding-bottom:50px;
+}
+</style>
+<body>
+  {% load crispy_forms_tags %}
+<div class="form" >
+<form>
+
+
 <div class='container'>
     <div class='row'>
 <div class="col-md-12"> 
@@ -13,7 +33,7 @@
   <div class="form-group row">  
   <label class="col-sm-1 col-form-label"></label>  
   <div class="col-sm-4">  
-  <h3>Update Run Details</h3>  
+  <h3>Update Run </h3>  
   </div>  
    </div>  
   <div class="form-group row">  
