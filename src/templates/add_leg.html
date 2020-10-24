@@ -1,7 +1,24 @@
 {% extends "base.html" %}
+{% block content %}
+
+<style>
+body {
+ background-image: url("/static/photo.jpeg");
+}
+.form
+{
+border-radius: 5px;
+background-color: #f2f2f2;
+padding: 20px;
+width:85%;
+margin-left:85px;
+padding-bottom:50px;
+}
+</style>
+<body>
+
 {% load crispy_forms_tags %}
 
-{% block content %}
     
     <div class="content-section col-md-8 container">   
         <form method="POST" class="post-form">  
