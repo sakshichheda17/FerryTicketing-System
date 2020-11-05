@@ -2,6 +2,7 @@ from django.shortcuts import render,redirect
 from run.models import Run
 from run.forms import RunForm
 from vessel.models import Vessel
+from django.contrib import messages
 # Create your views here.
 def dashboard(request):
     return render(request,'admin_home.html',{})
@@ -55,4 +56,5 @@ def update_run(request, id):
 def delete_run(request,id):
     run = Run.objects.get(id=id)
     run.delete()
+    messages.success(request, f'The run having id {id} was deleted successfully.')
     return redirect('/runs')

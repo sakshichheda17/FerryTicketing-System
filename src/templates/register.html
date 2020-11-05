@@ -1,6 +1,25 @@
 {% extends "base.html" %}
 {% load crispy_forms_tags %}
 {% block content %}
+
+
+<style>
+body {
+ background-image: url("/static/photo.jpeg");
+}
+.form
+{
+border-radius: 5px;
+background-color: #f2f2f2;
+padding: 20px;
+width:45%;
+margin-left:280px;
+padding-bottom:50px;
+}
+</style>
+<body>
+<div class="form" >
+
 	<div class="content-section">
 		<form method="POST">
 			{% csrf_token %}

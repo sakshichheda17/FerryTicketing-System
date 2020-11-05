@@ -1,244 +1,382 @@
+{% extends 'base.html' %}
+
+{% block nav %}
+
+	<a class="nav-item nav-link" href="{% url 'login' %}">Logout</a>
+	
+{% endblock %}
 <!DOCTYPE html>
 <html>
-<title>W3.CSS Template</title>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<head>
+	<!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+	<title>Checkout</title>
+	<style type="text/css">
 
 
+		.expiry-date-group {
+		  float: left;
+		  width: 50%
+		}
+
+		.expiry-date-group input {
+		  width: calc(100% + 1px);
+		  border-top-right-radius: 0;
+		  border-bottom-right-radius: 0;
+		}
+
+		.expiry-date-group input:focus {
+		  position: relative;
+		  z-index: 10;
+		}
+
+		.security-code-group {
+		  float: right;
+		  width: 50%
+		}
+
+		.security-code-group input {
+		  border-top-left-radius: 0;
+		  border-bottom-left-radius: 0;
+		}
+
+		#PayButton {
+		  outline: 0!important;
+		  height: 42px;
+		  font-size: 16px;
+		  background-color: #54C7C3!important;
+		  border: none;
+		  
+		}
+
+		#PayButton:hover {
+		  background-color: #6DCECB!important;
+		}
+
+		#PayButton:active {
+		  background-color: #4FBCB9!important;
+		}
+
+		#PayButton:disabled {
+		  background: rgba(84, 199, 195, .5)!important;
+		  color: #FFF!important;
+		}
+
+		.container {
+		  margin-top: 50px;
+		  
+		}
+
+		#Checkout {
+		 z-index: 100001;
+		  width: 50%;
+		  min-width: 300px;
+		  height: 100%;
+		  min-height: 100%;
+		  background: 0 0 #ffffff;
+		  border-radius: 8px;
+		 /* border: 1px solid #dedede;
+		  margin-left: auto;
+		  margin-right: auto;*/
+		  display: block;
+		  
+		  
+		}
+
+		#Checkout>h1,h3 {
+		  margin: 0;
+		/* padding: 10px;
+		  text-align: center;
+		 background: #EEF2F4;
+		  color: #5D6F78;
+		  font-size: 24px;
+		  font-weight: 300;
+		  border-bottom: 1px solid #DEDEDE;
+		  border-top-left-radius: 8px;
+		  border-top-right-radius: 8px; */
+		}
+
+		#Checkout>form {
+		  margin: 0 25px 25px;
+		}
+
+		label {
+		  color: #46545C;
+		  margin-bottom: 2px;
+		}
+
+		.input-container {
+		  position: relative;
+		}
+
+		.input-container input {
+		  padding-right: 25px;
+		}
+
+		.input-container>i, a[role="button"] {
+		  color: #d3d3d3;
+		  width: 25px;
+		  height: 30px;
+		  line-height: 30px;
+		  font-size: 16px;
+		  position: absolute;
+		  top: 2px;
+		  right: 2px;
+		  cursor: pointer;
+		  text-align: center;
+		}
+
+		.input-container>i:hover, a[role="button"]:hover {
+		  color: #777;
+		}
+		.amount-placeholder {
+		  font-size: 20px;
+		  height: 34px;
+
+		}
+
+		.amount-placeholder>button {
+		  float: right;
+		  width: 60px;
+		}
+
+		.amount-placeholder>span {
+		  line-height: 34px;
+		}
+
+		.card-row {
+		  text-align: center;
+		  margin: 20px 25px 10px;
+		}
+
+		.card-row span {
+		  width: 48px;
+		  height: 30px;
+		  margin-right: 3px;
+		  background-repeat: no-repeat;
+		  display: inline-block;
+		  background-size: contain;
+		}
+
+		.submit-button-lock {
+		  height: 20px;
+		  margin-top: -2px;
+		  margin-right: 7px;
+		  vertical-align: middle;
+		  
+		  display: inline-block;
+		}
+
+		.align-middle {
+		  vertical-align: middle;
+		}
+
+		input {
+		  box-shadow: none!important;
+		}
+
+		input:focus {
+		  border-color: #b0e5e3!important;
+		  background-color: #EEF9F9!important;
+		}
+	</style>
+	<link href='https://fonts.googleapis.com/css?family=Open+Sans:400,300' rel='stylesheet' type='text/css'>
+	<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+</head>
 <body>
-<ul>
-  <li><a href="#chooseferry.html"><i class="fa fa-ship w3-margin-right"></i>Ferry</a></li>
-  <div class="topnav-right">
-  <li><a href="selectroute.html"><i class="fa fa-search w3-margin-right"></i>Explore</a></li> 
-  <li><a href="registration.html"><i class="fa fa-user-o w3-margin-right"></i>Register</a></li> 
-  <li><a href="login.html"><i class="fa fa-user-o w3-margin-right"></i>Login</a></li>
-  <li><a href="#contact.html"><i class="fa fa-phone w3-margin-right"></i>Contact us</a></li>
-  </div>
-</ul>
 
-
-<h1 align="center"></h1>
-<div class="form" >
-<form>
-
-<ul>
-  <li><a  href="#selectroute.html"><i class="fa fa-road w3-margin-right"></i>Select Route</a></li>
-  <li><a href="#chooseferry.html"><i class="fa fa-ship w3-margin-right"></i>Choose Ferry</a></li>
-  <li><a class="active" href="#checkout.html"><i class="fa fa-ticket w3-margin-right"></i>Checkout</a></li>
-  <li><a href="#payment.html"><i class="fa fa-money w3-margin-right"></i>Payment</a></li>
-
-  <div class="topnav-right"> 
-  <li><a href="chooseferry.html"><i class="fa fa-reply w3-margin-right"></i>Previous</a></li>
-  <li><a href="payment.html"><i class="fa fa-share w3-margin-right"></i>Proceed</a></li>
-  </div>
-</ul>
-
-
-<table>
-  <tr>
-    <th> Name</th>
-    <td>Aish</td>
-    
-  </tr>
-  <tr>
-    <th>Email</th>
-    <td>aish@gmail.com</td>
-    
-  </tr>
-  <tr>
-    <th>Contact Number</th>
-    <td>1234567890</td>
-    
-  </tr>
-  <tr>
-    <th>Route</th>
-    <td>a->b</td>
-    
-  </tr>
-  <tr>
-    <th>Source</th>
-    <td>a</td>
-    
-  </tr>
-  <tr>
-    <th>Destination</th>
-    <td>b</td>
-    
-  </tr>
-  
-  <tr>
-    <th>Journey Type</th>
-    <td>Single/Double</td>
-    
-  </tr>
-  <tr>
-    <th>Checkin</th>
-    <td>date</td>
-    
-  </tr>
-  <tr>
-    <th>Checkout</th>
-    <td>date</td>
-    
-  </tr>
-  
-   <tr>
-    <th>Adults</th>
-    <td>5</td>
-    
-  </tr>
-  <tr>
-    <th>Kids</th>
-    <td>3</td>
-    
-  </tr>
-  
-
-</table>
-
-</body>
-</form>
-</div>
-</body>
-</html>
-
+{% block content %}
 
 
 <style>
 body {
- background-image: url("photo.jpeg");
+ background-image: url("/static/photo.jpeg");
 }
 .form
 {
 border-radius: 5px;
-
 background-color: #f2f2f2;
 padding: 20px;
-width:65%;
-margin-left:230px;
+width:95%;
+margin-left:28px;
 padding-bottom:50px;
 }
-.label
-{
-float: left;
-width: 200px;
-margin-top: 6px;
-}
-.input1
-{
-float: left;
-width: 700px;
-margin-top: 6px;
-}
-label
-{
- padding: 12px 12px 12px 0;
- display: inline-block;
-}
-input[type=text], input[type=password],input[type=email],input[type=date],select, textarea
-{
- width: 100%;
- padding: 12px;
- border: 1px solid #ccc;
- border-radius: 4px;
- box-sizing: border-box;
- resize: vertical;
-}
-.row
-{
-content: "";
- display: table;
- clear: both;
-}
-@media screen and (max-width: 1000px)
-{
- .label, .input1, input[type=submit]
- {
- width: 100%;
- margin-top: 0;
- }
-}
-.error
-{
-color:red;
-float: left;
-width: 75%;
-margin-top: 6px;
-}
-input[type=submit] {
- background-color: #6666ff;
- color: black;
- padding: 12px 20px;
- border: none;
- border-radius: 4px;
- cursor: pointer;
- float: right;
- position: absolute;
- align:center;
- margin-left : 350px;
- margin-top:20px;
- box-shadow: 1px 1px 1px;
-}
 </style>
-<style>
+<body>
+<div class="form" >
+<form>
 
 
+<div class='container'>
+<h3>Ticket Details</h3>
+</div>
+<div class='container'>
+<table class="table .table-bordered" style='border:solid #777575'>
+	<th colspan='11'>Departure ticket</th>
+<tr>
+<th>Source</th>
+<th>Destination</th>
+<th>Vessel</th>
+<th>Departure</th>
+<th>Arrival</th>
+<th>Adults</th>
+<th>Children</th>
+<th>Journey Date</th>
+<th>Booking Time</th>
+<th>Journey Amount</th>
+<th>Total Amount</th>
+</tr>
+<tr>
+	<td>{{ out_ticket.source }} </td>
+	<td>{{ out_ticket.destination }}</td>
+	<td>{{ out_ticket.vessel_name}}</td>
+	<td>{{ out_ticket.departure_time}}</td>
+	<td>{{ out_ticket.arrival_time}}</td>
+	<td>{{ out_ticket.no_of_adults}}</td>
+	<td>{{ out_ticket.no_of_children}}</td>
+	<td>{{ out_leg.date }}</td>
+	<!-- <td>{{ out_leg.id }}</td> -->
+	<td>{{ out_ticket.booking_time}}</td>
+	<td>{{ out_ticket.journey_amount}}</td>
+	<td>{{ out_ticket.total_amount}}</td>
+	</tr>
+</table>
+</div>
+<div class='container'>
+{% if in_booking_time %}
+<table class="table .table-bordered" style='border:solid #777575'>
+<th  colspan='11'>Arrival ticket</th>
+<tr>
+	<th>Source</th>
+	<th>Destination</th>
+	<th>Vessel</th>
+	<th>Departure</th>
+	<th>Arrival</th>
+	<th>Adults</th>
+	<th>Children</th>
+	<th>Journey Date</th>
+	<th>Booking Time</th>
+	<th>Journey Amount</th>
+	<th>Total Amount</th>
+	</tr>
+	<tr>
+		<td>{{ in_ticket.source }} </td>
+		<td>{{ in_ticket.destination }}</td>
+		<td>{{ in_ticket.vessel_name}}</td>
+		<td>{{ in_ticket.departure_time}}</td>
+		<td>{{ in_ticket.arrival_time}}</td>
+		<td>{{ in_ticket.no_of_adults}}</td>
+		<td>{{ in_ticket.no_of_children}}</td>
+		<td>{{ in_leg.date }}</td>
+		<td>{{ in_ticket.booking_time}}</td>
+		<td>{{ in_ticket.journey_amount}}</td>
+		<td>{{ in_ticket.total_amount}}</td>
+	</tr>
 
-body {
-  font-size: 14px;
-}
+</table>
+{% endif %}
+</div>
 
-ul {
-  list-style-type: none;
-  margin: 0;
-  padding: 0;
-  overflow: hidden;
-  background-color: black;
-  position: -webkit-; /* Safari */
-  position: ;
-  top: 0;
-}
+<div class="container">
+  <div id="Checkout" class="inline">
+	  <legend class="border-bottom mb-4">
+      <h3 style='color:#343a40;'>Pay Invoice</h3></legend>
+      <div class="card-row">
+          <span class="visa"></span>
+          <span class="mastercard"></span>
+          <span class="amex"></span>
+          <span class="discover"></span>
+      </div>
+      <form id='PaymentForm' action="" method='POST'>{% csrf_token %}
+      	<fieldset class="form-group">
+			<legend class="mb-4">Adult Passengers</legend>
 
-li {
-  float: left;
-}
 
-li a {
-  display: block;
-  color: white;
-  text-align: center;
-  padding: 14px 16px;
-  text-decoration: none;
-}
+      	{% with ''|center:out_ticket.no_of_adults as range %}
+      	{% for _ in range %}
+      	<div class="form-group">
+      		<label>Passenger{{ forloop.counter }} Name</label>
+      		<input type="text" name="passenger">
+      	</div>
+      	{% endfor %}
+      	{% endwith %}
+		</fieldset>
 
-li a:hover {
-  background-color: grey;
-}
+      	<fieldset class="form-group">
+			<legend class="mb-4">Child Passengers</legend>
+		
 
-.active {
-  background-color: red;
-}
+      	{% with ''|center:out_ticket.no_of_children as range %}
+      	{% for _ in range %}
+      	<div class="form-group">
+      		<label>Passenger{{ forloop.counter }} Name</label>
+      		<input type="text" name="passenger">
+      	</div>
+      	{% endfor %}
+      	{% endwith %}
+      	</fieldset>
 
-.topnav-right {
-  float: right;
-}
+          <div class="form-group">
+              <label for="PaymentAmount">Payment amount</label>
+              <div class="amount-placeholder">
+				  <input type="text" readonly value='Rs. {{ out_ticket.total_amount }}'>
+              </div>
+          </div>
+          <div class="form-group">
+              <label or="NameOnCard">Name on card</label>
+              <input id="NameOnCard" class="form-control" type="text" maxlength="255" required></input>
+          </div>
+          <div class="form-group">
+              <label for="CreditCardNumber">Card number</label>
+              <input id="CreditCardNumber" class="null card-image form-control" type="text" required></input>
+          </div>
+          <div class="expiry-date-group form-group">
+              <label for="ExpiryDate">Expiry date</label>
+              <input id="ExpiryDate" class="form-control" type="text" placeholder="MM / YY" maxlength="7" required></input>
+          </div> 
+           <!-- <div class="security-code-group form-group">
+              <label for="SecurityCode">Security code</label>
+              <div class="input-container" >
+                  <input id="SecurityCode" class="form-control" type="text" required></input>
+                  <i id="cvc" class="fa fa-question-circle"></i>
+              </div>
+          </div> -->
+          <button id="PayButton" class="btn btn-block btn-success submit-button" type="submit" style='margin-bottom:100px;' value="pay">
+              <span class="submit-button-lock"></span>
+              <span class="align-middle">Pay Now</span>
+          </button>
+      </form>
+  </div>
+</div>
 
-</style>
+<!-- <script type="text/javascript">
+	$(function () {
+	  $('[data-toggle="popover"]').popover();
+	  
+	  $('#cvc').on('click', function(){
+	    if ( $('.cvc-preview-container').hasClass('hide') ) {
+	      $('.cvc-preview-container').removeClass('hide');
+	    } else {
+	      $('.cvc-preview-container').addClass('hide');
+	    }    
+	  });
+	  
+	});
+</script> -->
+<script>
+	document.getElementById("PaymentForm").onsubmit = function() {myFunction()};
 
-<style>
-table {
-  border-collapse: collapse;
-  width: 100%;
-}
+	function myFunction() {
+	  alert("Congratulations! Booking Confirmed.");
+	}
+</script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script src="assets/js/jquery.payform.min.js" charset="utf-8"></script>
 
-th, td {
-  padding: 8px;
-  text-align: left;
-  border-bottom: 1px solid #ddd;
-}
-
-tr:hover {background-color:#f5f5f5;}
-</style>
+</body>
+{% endblock %}
