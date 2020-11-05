@@ -6,6 +6,21 @@
 	
 {% endblock %}
 {% block content %}
+<style>
+  input[type=radio]{
+      transform:scale(1.3);
+  }
+  table{
+      background-color: rgb(236, 236, 236);
+  }
+  th, td {
+      padding: 2px 15px 2px 15px;
+  }  
+  .submitbtn {
+     margin: 10px 0 10px 0;
+  }
+</style>
+
 <fieldset class="form-group">
   <legend class="border-bottom mb-4">Select Date</legend>
 </fieldset>
@@ -19,16 +34,21 @@
        
        <form action="" method="post">
         {% csrf_token %}
-        {% if out_available%}
+        {% if out_available%} 
         <fieldset id='outgoing'>
           <legend class="mb-4">For One Way</legend>
        {% for ferry in out_available %}
-       
-       <input class="form-check-input" type="radio" id="{{ forloop.counter }}" name="out_ferry_id" value="{{ ferry.id }}">
-       <label for="other">
-         <table>
+       <table>
         <tr>
-        <th>Ferry ID: </th><td>{{ ferry.id }}</td></tr>
+           <td rowspan="8">
+              <div class="custom-control custom-radio">
+              <input class="form-check-input" type="radio" id="{{ forloop.counter }}" name="out_ferry_id" value="{{ ferry.id }}">
+              </div>
+            </td>
+        </tr>
+        <label for="other">
+         
+        <tr><th>Ferry ID: </th><td>{{ ferry.id }}</td></tr>
         <tr><th>Source: </th><td>{{ ferry.source }}</td></tr>
         <!-- <tr><th>Destination: </th><td>{{ ferry.destination }}</td></tr>
         <tr><th>Vessel: </th><td>{{ ferry.vessel_name }}</td></tr> -->
@@ -37,8 +57,9 @@
         <tr><th>Date: </th><td>{{ ferry.date }}</td></tr>
         <tr><th>Arrival Time: </th><td>{{ ferry.arrival_time }}</td></tr>
         <tr><th>Departure Time:  </th><td>{{ ferry.departure_time }}</td></tr>
-        </table>
-      </label><br>
+        
+      </label>
+    </table>
        
        {% endfor %}
       </fieldset>
@@ -53,11 +74,17 @@
       <fieldset id='incoming'>
         <legend class="mb-4">For Return</legend>
      {% for ferry in in_available %}
-     <input type="radio" id="{{ forloop.counter }}" name="in_ferry_id" value="{{ ferry.id }}">
-     <label for="other">
-      <table>
-        <tr>
-        <th>Ferry ID: </th><td>{{ ferry.id }}</td></tr>
+     <table>
+      <tr>
+         <td rowspan="8">
+            <div class="custom-control custom-radio">
+            <input type="radio" id="{{ forloop.counter }}" name="in_ferry_id" value="{{ ferry.id }}">
+            </div>
+          </td>
+      </tr>
+      <label for="other">
+      
+        <tr><th>Ferry ID: </th><td>{{ ferry.id }}</td></tr>
         <!-- <tr><th>Source: </th><td>{{ ferry.source }}</td></tr>
         <tr><th>Destination: </th><td>{{ ferry.destination }}</td></tr> -->
         <tr><th>Source: </th><td>{{ ferry.source }}</td></tr>
@@ -66,12 +93,13 @@
         <tr><th>Date: </th><td>{{ ferry.date }}</td></tr>
         <tr><th>Arrival Time: </th><td>{{ ferry.arrival_time }}</td></tr>
         <tr><th>Departure Time:  </th><td>{{ ferry.departure_time }}</td></tr>
-        </table>
-      </label><br>
+        
+      </label>
+    </table>
      
      {% endfor %}
     </fieldset>
-     <input type="submit" name="Submit" value="Ok" class="btn btn-primary">
+     <input type="submit" name="Submit" value="Ok" class="btn btn-primary submitbtn">
   </form>
    {% endif %}
       
