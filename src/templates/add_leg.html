@@ -1,5 +1,7 @@
-{% extends "base.html" %}
+{% extends 'admin_base.html' %}
+{% load static from static %}
 {% block content %}
+
 
 <style>
 body {
@@ -20,7 +22,7 @@ padding-bottom:50px;
 {% load crispy_forms_tags %}
 
     
-    <div class="content-section col-md-8 container">   
+    <div class="content-section col-md-8 container form">   
         <form method="POST" class="post-form">  
             {% csrf_token %}  
         <fieldset class="form-group">

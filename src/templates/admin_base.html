@@ -7,9 +7,58 @@
     
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+<style>
+
+.nav_ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background-color: black;
+  position: -webkit-; /* Safari */
+  top: 0;
+}
+
+li {
+  float: left;
+}
+
+li a {
+  display: block;
+  color: white;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+}
+
+li a:hover {
+  background-color: grey;
+  text-decoration: none;
+  color: white;
+}
+
+.topnav-right {
+  float: right;
+}
+
+body {
+ background-image: url("/static/photo.jpeg");
+}
+
+
+</style>
 </head>
 <body>
-
+    <ul class="nav_ul">
+        <li><a href="#chooseferry.html"><i class="fa fa-ship w3-margin-right"></i> Ferry Ticketing System</a></li>
+        <div class="topnav-right">
+        <li><a href="/manager/"><i class="fa fa-search w3-margin-right"></i> Home</a></li> 
+        
+        <li><a href="/login/"><i class="fa fa-user-o w3-margin-right"></i> Login</a></li>
+        <li><a href="#contact.html"><i class="fa fa-phone w3-margin-right"></i> Contact us</a></li>
+        </div>
+      </ul>
+      
       <main role="main" class="container">
         <div class="row">
           <div class="col-md-12">

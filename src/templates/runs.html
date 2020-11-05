@@ -95,3 +95,7 @@ padding-bottom:50px;
     } );
 </script>
 {% endblock %}
+
+{% block redirect %}
+	<a href="{% url 'runs' %}" class="del-msg">&times;</a>
+{% endblock %}

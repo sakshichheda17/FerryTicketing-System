@@ -173,8 +173,9 @@ def choose_ferry_single(request):
 
 	
 def checkout(request):
+	print(request.session)
 	passenger_id = request.session['passenger_id']
-	out_booking_time = request.session['out_booking_time']
+	out_booking_time = request.session['booking_time'] #changed request.session['out_booking_time'] to request.session['booking_time'] 
 	
 	context = {'passenger_id': request.session['passenger_id'],
 		'out_booking_time': out_booking_time

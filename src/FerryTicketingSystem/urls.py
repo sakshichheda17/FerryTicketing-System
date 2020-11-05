@@ -37,8 +37,8 @@ urlpatterns = [
     path('checkout/', checkout),
 
     #manager
-    path('manager/',view_dashboard),
-    path('runs/',get_runs),
+    path('manager/',view_dashboard,name='manager_home'),
+    path('runs/',get_runs,name='runs'),
     path('addrun/',add_run),
     path('editrun/<int:id>',edit_run),
     path('updaterun/<int:id>',update_run),
