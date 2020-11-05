@@ -12,13 +12,17 @@
   }
   table{
       background-color: rgb(236, 236, 236);
+      margin-bottom: 5px;
   }
   th, td {
       padding: 2px 15px 2px 15px;
   }  
   .submitbtn {
-     margin: 10px 0 10px 0;
+     margin: 30px 0 10px 0;
   }
+ label{
+  display: none;
+ }
 </style>
 
 
@@ -47,15 +51,16 @@ padding-bottom:50px;
        {% csrf_token %}
        <input type="date" name="date1" id="today">
        <input type="date" name="date2" id="today">
-       <input type="submit" name="Submit" value="Find Ferry" class="btn btn-primary">
+       <input type="submit" name="Submit" value="Find Ferry" class="btn btn-outline-info">
        <br>
        
        
        <form action="" method="post">
         {% csrf_token %}
         {% if out_available%} 
+        <br>
         <fieldset id='outgoing'>
-          <legend class="mb-4">For One Way</legend>
+          <legend class="mb-4 border-bottom">For One Way</legend>
        {% for ferry in out_available %}
        <table>
         <tr>
@@ -68,14 +73,15 @@ padding-bottom:50px;
         <label for="other">
          
         <tr><th>Ferry ID: </th><td>{{ ferry.id }}</td></tr>
-        <tr><th>Source: </th><td>{{ ferry.source }}</td></tr>
+        
         <!-- <tr><th>Destination: </th><td>{{ ferry.destination }}</td></tr>
         <tr><th>Vessel: </th><td>{{ ferry.vessel_name }}</td></tr> -->
         <tr><th>Source: </th><td>{{ ferry.source }}</td></tr>
         <tr><th>Destination:  </th><td>{{ ferry.destination }}</td></tr>
         <tr><th>Date: </th><td>{{ ferry.date }}</td></tr>
-        <tr><th>Arrival Time: </th><td>{{ ferry.arrival_time }}</td></tr>
+        
         <tr><th>Departure Time:  </th><td>{{ ferry.departure_time }}</td></tr>
+        <tr><th>Arrival Time: </th><td>{{ ferry.arrival_time }}</td></tr>
         
       </label>
     </table>
@@ -91,7 +97,7 @@ padding-bottom:50px;
      <!-- <form action="" method="post">
       {% csrf_token %} -->
       <fieldset id='incoming'>
-        <legend class="mb-4">For Return</legend>
+        <legend class="mb-4 border-bottom">For Return</legend>
      {% for ferry in in_available %}
      <table>
       <tr>
@@ -110,15 +116,16 @@ padding-bottom:50px;
         <tr><th>Destination:  </th><td>{{ ferry.destination }}</td></tr>
         <tr><th>Vessel: </th><td>{{ ferry.vessel_name }}</td></tr>
         <tr><th>Date: </th><td>{{ ferry.date }}</td></tr>
-        <tr><th>Arrival Time: </th><td>{{ ferry.arrival_time }}</td></tr>
+        
         <tr><th>Departure Time:  </th><td>{{ ferry.departure_time }}</td></tr>
+        <tr><th>Arrival Time: </th><td>{{ ferry.arrival_time }}</td></tr>
         
       </label>
     </table>
      
      {% endfor %}
     </fieldset>
-     <input type="submit" name="Submit" value="Ok" class="btn btn-primary submitbtn">
+     <input type="submit" name="Submit" value="Ok" class="btn btn-outline-info submitbtn">
   </form>
    {% endif %}
       

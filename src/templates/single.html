@@ -12,6 +12,7 @@
    }
    table{
        background-color: rgb(236, 236, 236);
+       margin-bottom: 5px;
    }
    th, td {
        padding: 2px 15px 2px 15px;
@@ -19,6 +20,9 @@
    .submitbtn {
       margin-top: 10px;
    }
+   label{
+      display: none;
+     }
 </style>
 
 
@@ -35,6 +39,9 @@ width:40%;
 margin-left:350px;
 padding-bottom:50px;
 }
+label{
+   display: none;
+  }
 </style>
 <body>
 <div class="form" >
@@ -46,7 +53,7 @@ padding-bottom:50px;
    <form action="" method="POST">
        {% csrf_token %}
        <input type="date" name="date" id="today">
-       <input type="submit" name="Submit" value="Find Ferry" class="btn btn-primary">
+       <input type="submit" name="Submit" value="Find Ferry" class="btn btn-outline-info">
        
     </form>
        <br>
@@ -71,14 +78,14 @@ padding-bottom:50px;
             <tr><th>Date: </th><td>{{ ferry.date }}</td></tr>
             <tr><th>Source: </th><td>{{ ferry.source }}</td></tr>
             <tr><th>Destination:  </th><td>{{ ferry.destination }}</td></tr>
-            <tr><th>Arrival Time: </th><td>{{ ferry.arrival_time }}</td></tr>
-            <tr><th>Departure Time:  </th><td>{{ ferry.departure_time }}</td></tr>
             
+            <tr><th>Departure Time:  </th><td>{{ ferry.departure_time }}</td></tr>
+            <tr><th>Arrival Time: </th><td>{{ ferry.arrival_time }}</td></tr>
        </label>
       </table>
        
        {% endfor %}
-       <input type="submit" name="Submit" value="Ok" class="btn btn-primary submitbtn">
+       <input type="submit" name="Submit" value="Ok" class="btn btn-outline-info submitbtn">
     </form>
      {% endif %}
    
