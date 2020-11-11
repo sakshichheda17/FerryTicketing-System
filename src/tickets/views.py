@@ -1,10 +1,19 @@
 from django.shortcuts import render
 from .models import Ticket
 from leg.models import Leg
-from leg.views import update_leg_seats
 import datetime
+from run.models import Run
+from django.db.models.functions import Now
+from django.contrib import messages
 
 # Create your views here.
+def update_leg_seats(ticket):
+    leg = Leg.objects.get(id=ticket.leg_id)
+    total_tickets_sold = ticket.no_of_adults + ticket.no_of_children
+    leg.sold_seats = leg.sold_seats + total_tickets_sold
+    leg.available_seats = leg.available_seats - total_tickets_sold
+    leg.save()
+
 
 # After Select Route 
 def generate_ticket(obj,passenger_id,form,ticket_no):

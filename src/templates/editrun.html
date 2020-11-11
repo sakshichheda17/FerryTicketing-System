@@ -22,7 +22,7 @@ padding-bottom:50px;
 <div class='container'>
     <div class='row'>
 <div class="col-md-12"> 
- <form method="POST" class="post-form" action="/updaterun/{{run.id}}">  
+ <form method="POST" class="post-form">  
    {% csrf_token %}  
   <div class="container">  
  <br>  
@@ -110,34 +110,34 @@ padding-bottom:50px;
    <div class="form-group row">  
     <label class="col-sm-1 col-form-label" style='padding-top:0; padding-bottom:0;'>Mon</label>  
       <div class="col-sm-1">  
-        <input type="checkbox" class="form-check-input" name="Mon" id="id_active" {% if run.Mon %}checked{% endif %} value="{{ run.Mon }}" />  
+        <input type="checkbox" class="form-check-input" name="Mon" id="id_active" {% if run.Mon %}checked{% endif %}/>  
       </div> 
       
     <label class="col-sm-1 col-form-label" style='padding-top:0; padding-bottom:0;'>Tues</label>  
     <div class="col-sm-1">  
-        <input type="checkbox" class="form-check-input" name="Tue" id="id_active" {% if run.Tue %}checked{% endif %} value="{{ run.Tue }}" />  
+        <input type="checkbox" class="form-check-input" name="Tue" id="id_active" {% if run.Tue %}checked{% endif %}/>  
     </div>  
     <label class="col-sm-1 col-form-label" style='padding-top:0; padding-bottom:0;'>Wed</label>  
     <div class="col-sm-1">
-        <input type="checkbox" class="form-check-input" name="Wed" id="id_active" {% if run.Wed %}checked{% endif %} value="{{ run.Wed }}" />  
+        <input type="checkbox" class="form-check-input" name="Wed" id="id_active" {% if run.Wed %}checked{% endif %}/>  
     </div> 
     <label class="col-sm-1 col-form-label" style='padding-top:0; padding-bottom:0;'>Thur</label>  
     <div class="col-sm-1">  
-        <input type="checkbox" class="form-check-input" name="Thu" id="id_active" {% if run.Thu %}checked{% endif %} value="{{ run.Thu }}" />  
+        <input type="checkbox" class="form-check-input" name="Thu" id="id_active" {% if run.Thu %}checked{% endif %}/>  
     </div> 
   </div>
   <div class="form-group row">  
   <label class="col-sm-1 col-form-label" style='padding-top:0; padding-bottom:0;'>Fri</label>  
   <div class="col-sm-1">  
-    <input type="checkbox" class="form-check-input" name="Fri" id="id_active" {% if run.Fri %}checked{% endif %} value="{{ run.Fri }}" />  
+    <input type="checkbox" class="form-check-input" name="Fri" id="id_active" {% if run.Fri %}checked{% endif %}/>  
   </div>  
   <label class="col-sm-1 col-form-label" style='padding-top:0; padding-bottom:0;'>Sat</label>  
   <div class="col-sm-1">
-    <input type="checkbox" class="form-check-input" name="Sat" id="id_active" {% if run.Sat %}checked{% endif %} value="{{ run.Sat }}" />  
+    <input type="checkbox" class="form-check-input" name="Sat" id="id_active" {% if run.Sat %}checked{% endif %}/>  
   </div> 
   <label class="col-sm-1 col-form-label" style='padding-top:0; padding-bottom:0;'>Sun</label>  
   <div class="col-sm-1">
-    <input type="checkbox" class="form-check-input" name="Sun" id="id_active" {% if run.Sun %}checked{% endif %} value="{{ run.Sun }}" />  
+    <input type="checkbox" class="form-check-input" name="Sun" id="id_active" {% if run.Sun %}checked{% endif %}/>  
   </div>
   </div>
 

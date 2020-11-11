@@ -9,7 +9,10 @@ from tickets.models import Ticket
 from django.http import HttpResponseRedirect
 from leg.models import Leg
 from tickets.views import generate_ticket,calc_journey_amount,calc_total_amount,update_ticket
-from leg.views import get_leg
+import datetime
+from django.db.models.functions import Now
+from django.contrib import messages
+from run.models import Run
 
 from django.conf import settings 
 # from django.core.mail import send_mail 
@@ -94,6 +97,51 @@ def select_route(request):
 	print(context)
 	return render(request,'select_route.html',context)
 
+def get_avl_legs(date,ticket):
+    date_int = (list(map(int,date.split('-')))) #convert to list of integers [year,month,date]
+    d = datetime.date(date_int[0],date_int[1],date_int[2]) #pass integers to create datetime instance
+    day = d.strftime("%a") #get day of that date
+
+    # check if date records in leg table
+    existing_dates = [e['date'] for e in Leg.objects.values('date')]
+    available = []
+    schedule = Run.objects.all()
+    if d in existing_dates:
+        #check available legs based on seats 
+        available_legs = list(Leg.objects.filter(date=d))
+        print(available_legs)
+        # print([e.run_id for e in available_legs])
+        # existing_legs = Leg.objects.all()
+        for leg in available_legs:
+            if d == leg.date and leg.source == ticket.source and leg.destination == ticket.destination and leg.available_seats >= (ticket.no_of_adults+ticket.no_of_children):
+                available.append(leg)
+        #return legs
+    # if len(available):
+        #get legs from run table based on day and passenger's route choice!
+    if len(available) == 0:
+        for i in range(len(schedule)):
+            run = schedule[i]
+            if getattr(run, day) == True : #if there is run on the requested date's day, add new leg
+                if run.source == ticket.source and run.destination == ticket.destination:
+                    Leg.objects.create(
+                        date=d,
+                        day=day,
+                        run_id=run.id,
+                        source = run.source,
+                        destination = run.destination,
+                        vessel_name = run.vessel_name,
+                        arrival_time = run.arrival_time,
+                        departure_time = run.departure_time,
+                        PASS = run.PASS,
+                        PARS = run.PARS,
+                        PCSS = run.PCSS,
+                        PCRS = run.PCRS,
+                        max_seats = run.max_seats,
+                        sold_seats=0,
+                        available_seats=run.max_seats)
+                    available.append(Leg.objects.latest('id'))
+    print(available)
+    return available
 
 def choose_ferry_return(request):
     
@@ -112,8 +160,8 @@ def choose_ferry_return(request):
         # date = request.POST['date'] #get date as string
         out_date = request.POST['date1']
         in_date = request.POST['date2']
-        out_available = get_leg(out_date,out_ticket)
-        in_available = get_leg(in_date,in_ticket)
+        out_available = get_avl_legs(out_date,out_ticket)
+        in_available = get_avl_legs(in_date,in_ticket)
         print(out_available, in_available)
         context.update({
             # 'day' : day,
@@ -149,7 +197,7 @@ def choose_ferry_single(request):
         out_source = out_ticket.source
         out_destination = out_ticket.destination
         out_date = request.POST['date']
-        out_available = get_leg(out_date,out_ticket)       
+        out_available = get_avl_legs(out_date,out_ticket)       
         print(out_available)
         context.update({
             'out_available': out_available
